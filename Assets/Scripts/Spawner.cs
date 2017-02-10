@@ -93,9 +93,10 @@ public class Spawner : MonoBehaviour {
         leftCollider = leftGoal.GetComponent<BoxCollider2D>();
         rightCollider = rightGoal.GetComponent<BoxCollider2D>();
 
-        Dist = rightCollider.bounds.center.x - leftCollider.bounds.center.x;
+
+
+        Dist = rightGoal.GetComponent<SpriteRenderer>().bounds.min.x - leftGoal.GetComponent<SpriteRenderer>().bounds.max.x;
         Debug.Log(Dist);
         leftCollider.size = new Vector3(Dist * 2, 1, 1);
-        leftCollider.offset = new Vector3(Dist, 0, 0);
     }
 }

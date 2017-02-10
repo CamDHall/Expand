@@ -57,7 +57,7 @@ public class Player : MonoBehaviour {
             Vector3 Pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             transform.position = new Vector3(Pos.x, transform.position.y, 0);
 
-            addMass += (.005f * Time.deltaTime);
+            addMass += (.001f * Time.deltaTime);
             notTouching = false;
             transform.localScale = new Vector3(transform.localScale.x + addMass, transform.localScale.y + addMass, 0);
         }
@@ -79,6 +79,7 @@ public class Player : MonoBehaviour {
         if(coll.gameObject.tag == "Goal")
         {
             Scoring.Score += 100f;
+            Destroy(coll.gameObject);
         }
     }
 }
