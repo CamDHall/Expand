@@ -1,17 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class Starting : MonoBehaviour {
+public class Begin : MonoBehaviour {
 
-    public void Intro()
-    {
-        SceneManager.LoadScene("Intro");
-    }
-
-    public void Play()
+	public void OnMouseClick()
     {
         SceneManager.LoadScene("main");
     }

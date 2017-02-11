@@ -17,6 +17,9 @@ public class Player : MonoBehaviour {
 
     public static bool madeGoal = false;
 
+    // Camera Shake
+    public GameObject CameraShake;
+
 	void Start () {
         newScale = new Vector3(0.5f, 0.5f, 0);
 	}
@@ -81,8 +84,7 @@ public class Player : MonoBehaviour {
     {
         if(coll.gameObject.tag == "Wall")
         {
-            transform.localScale -= new Vector3(transform.localScale.x * 0.4f, transform.localScale.x * 0.4f, 0);
-            Destroy(coll.gameObject);
+            Scoring.Score += 50f;
         }
 
         if(coll.gameObject.tag == "Goal")
@@ -90,5 +92,12 @@ public class Player : MonoBehaviour {
             Scoring.Score += (coll.transform.localScale.x * 50f);
             Destroy(coll.gameObject);
         }
+    }
+
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        CameraShake.gameObject.SendMessage("DoShake");
+        transform.localScale -= new Vector3(transform.localScale.x * 0.8f, transform.localScale.y * 0.8f, 0);
+        Destroy(coll.gameObject);
     }
 }

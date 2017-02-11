@@ -8,7 +8,6 @@ public class Spawner : MonoBehaviour {
     public GameObject leftWall, rightWall;
     float wallX = 0, wallY = 0;
     Vector3 leftWallPos, rightWallPos;
-    public GameObject empty;
 
     // Goals
     public GameObject sphere;
@@ -62,9 +61,19 @@ public class Spawner : MonoBehaviour {
         rightWallPos = new Vector3(wallX + wallY, transform.position.y, transform.position.z);
 
         // Instantiate
-        Instantiate(leftWall, leftWallPos, leftWall.transform.rotation, transform);
-        Instantiate(rightWall, rightWallPos, rightWall.transform.rotation, transform);
+        var left = Instantiate(leftWall, leftWallPos, leftWall.transform.rotation, transform);
+        var right = Instantiate(rightWall, rightWallPos, rightWall.transform.rotation, transform);
 
+        float Dist = (left.transform.position - right.transform.position).magnitude * 2.1f;
+
+        Vector3 colSize = new Vector3(Dist, 1f, 0);
+        Debug.Log(Dist);
+
+        left.GetComponent<BoxCollider2D>().size = colSize;
+        right.GetComponent<BoxCollider2D>().size = new Vector3(Dist, 1f, 0);
+
+        left.GetComponent<BoxCollider2D>().offset = new Vector3((colSize.x / 2) + 0.5f, 0, 0);
+        right.GetComponent<BoxCollider2D>().offset = new Vector3((-1f * (colSize.x / 2)) - 0.5f, 0, 0);
 
         leftWall.GetComponent<Rigidbody2D>().gravityScale = gravity;
         rightWall.GetComponent<Rigidbody2D>().gravityScale = gravity;
