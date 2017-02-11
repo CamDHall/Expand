@@ -17,7 +17,7 @@ public class Spawner : MonoBehaviour {
     // Gravity
     float gravity, goalGravity = 1.01f;
     float gravityModifier = 1.001f;
-    float lowGravityLimit = 0.09f, highGravityLimit = 0.1f, goalLowGravityLimit = 0.09f, goalHighGravityLimit = 0.1f;
+    float lowGravityLimit = 0.09f, highGravityLimit = 0.1f;
     
     // Timer
     float obstacleTimer, goalTimer;
@@ -34,6 +34,15 @@ public class Spawner : MonoBehaviour {
 
         if (obstacleTimer < Time.time)
         {
+            if (lowLimit >= .1f)
+            {
+                lowLimit -= 0.1f;
+            }
+
+            if (highLimit >= 0.5f)
+            {
+                highLimit -= 0.1f;
+            }
             Obstacle();
             obstacleTimer = Time.time + Random.Range(lowLimit, highLimit);
         }
@@ -54,8 +63,8 @@ public class Spawner : MonoBehaviour {
         gravity = Random.Range(lowGravityLimit, highGravityLimit);
 
         // Position
-        wallX = Random.Range(-2.2f, 1f);
-        wallY = Random.Range(0.8f, 2f);
+        wallX = Random.Range(-8.5f, 6f);
+        wallY = Random.Range(0.7f, 2.5f);
 
         leftWallPos = new Vector3(wallX, transform.position.y, transform.position.z);
         rightWallPos = new Vector3(wallX + wallY, transform.position.y, transform.position.z);
@@ -67,7 +76,6 @@ public class Spawner : MonoBehaviour {
         float Dist = (left.transform.position - right.transform.position).magnitude * 2.1f;
 
         Vector3 colSize = new Vector3(Dist, 1f, 0);
-        Debug.Log(Dist);
 
         left.GetComponent<BoxCollider2D>().size = colSize;
         right.GetComponent<BoxCollider2D>().size = new Vector3(Dist, 1f, 0);
@@ -82,11 +90,11 @@ public class Spawner : MonoBehaviour {
     void Goal()
     {
         // Position
-        goalPos = new Vector3(Random.Range(-5f, 5f), Random.Range(8f, 4.5f), 0);
+        goalPos = new Vector3(Random.Range(-8f, 8f), Random.Range(8f, 4.5f), 0);
 
         // Instantiate
         GameObject circle = Instantiate(sphere, transform);
-        var scale = Random.Range(0.5f, 2f);
+        var scale = Random.Range(0.75f, 3f);
         sphere.transform.localScale = new Vector3(scale, scale,0);
         sphere.transform.position = goalPos;
 

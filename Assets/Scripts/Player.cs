@@ -21,12 +21,12 @@ public class Player : MonoBehaviour {
     public GameObject CameraShake;
 
 	void Start () {
-        newScale = new Vector3(0.5f, 0.5f, 0);
+        newScale = new Vector3(0.75f, 0.75f, 0);
 	}
 
     void Update()
     {
-        if(transform.localScale.x < 0.5f)
+        if(transform.localScale.x < 0.75f)
         {
             SceneManager.LoadScene("End");
         }
@@ -97,7 +97,7 @@ public class Player : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D coll)
     {
         CameraShake.gameObject.SendMessage("DoShake");
-        transform.localScale -= new Vector3(transform.localScale.x * 0.8f, transform.localScale.y * 0.8f, 0);
+        transform.localScale -= new Vector3(transform.localScale.x * 0.85f, transform.localScale.y * 0.85f, 0);
         Destroy(coll.gameObject);
     }
 }
