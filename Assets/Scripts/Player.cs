@@ -7,6 +7,7 @@ public class Player : MonoBehaviour {
 
     float addMass;
     static public float currentScale;
+    public static Vector3 Pos;
 
     // Scaling
     float shrink;
@@ -22,11 +23,15 @@ public class Player : MonoBehaviour {
 
     void Update()
     {
+        if(transform.localScale.x < 0.5f)
+        {
+            SceneManager.LoadScene("End");
+        }
         currentScale = transform.localScale.x;
 
         foreach (Touch touch in Input.touches)
         {
-            Vector3 Pos = Camera.main.ScreenToWorldPoint(touch.position);
+            Pos = Camera.main.ScreenToWorldPoint(touch.position);
 
             transform.position = new Vector3(Pos.x, transform.position.y, 0);
 
@@ -54,8 +59,11 @@ public class Player : MonoBehaviour {
         //
         if(Input.GetMouseButton(0))
         {
-            Vector3 Pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            transform.position = new Vector3(Pos.x, transform.position.y, 0);
+            if (Camera.main.ScreenToWorldPoint(Input.mousePosition).x > -8.5f && Camera.main.ScreenToWorldPoint(Input.mousePosition).x < 8.5f)
+            {
+                Vector3 Pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                transform.position = new Vector3(Pos.x, transform.position.y, 0);
+            }
 
             addMass += (.001f * Time.deltaTime);
             notTouching = false;
@@ -73,12 +81,13 @@ public class Player : MonoBehaviour {
     {
         if(coll.gameObject.tag == "Wall")
         {
-            SceneManager.LoadScene("End");
+            transform.localScale -= new Vector3(transform.localScale.x * 0.4f, transform.localScale.x * 0.4f, 0);
+            Destroy(coll.gameObject);
         }
 
         if(coll.gameObject.tag == "Goal")
         {
-            Scoring.Score += 100f;
+            Scoring.Score += (coll.transform.localScale.x * 50f);
             Destroy(coll.gameObject);
         }
     }

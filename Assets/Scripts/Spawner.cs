@@ -8,14 +8,15 @@ public class Spawner : MonoBehaviour {
     public GameObject leftWall, rightWall;
     float wallX = 0, wallY = 0;
     Vector3 leftWallPos, rightWallPos;
+    public GameObject empty;
 
     // Goals
-    public GameObject leftGoal, rightGoal;
-    public static Vector3 leftGoalPos, rightGoalPos;
-    float goalX = 0;
+    public GameObject sphere;
+    public static Vector3 goalPos;
+    Color goalColor;
 
     // Gravity
-    float gravity, goalGravity;
+    float gravity, goalGravity = 1.01f;
     float gravityModifier = 1.001f;
     float lowGravityLimit = 0.09f, highGravityLimit = 0.1f, goalLowGravityLimit = 0.09f, goalHighGravityLimit = 0.1f;
     
@@ -23,15 +24,11 @@ public class Spawner : MonoBehaviour {
     float obstacleTimer, goalTimer;
     public float timerProgress = 0.99f, goalTimerProgress = 0.9999f;
     float lowLimit = 3f, highLimit = 5f;
-    float goalTimerLow = 6f, goalTimerHigh = 12f;
-
-    // Collider
-    BoxCollider2D leftCollider, rightCollider;
-    float Dist;
+    float goalTimerLow = 0.1f, goalTimerHigh = 0.5f, goalMultiplierTime;
 
 	void Start () {
         obstacleTimer = Time.time + 1f;
-        goalTimer = Time.time + 6f;
+        goalTimer = Time.time + 2f;
     }
 
     void Update() {
@@ -45,7 +42,8 @@ public class Spawner : MonoBehaviour {
         if(goalTimer < Time.time)
         {
             Goal();
-            goalTimer = Time.time + Random.Range(goalTimerLow, goalTimerHigh);
+            goalMultiplierTime = Time.time / 50f;
+            goalTimer = Time.time + Random.Range(goalTimerLow / goalMultiplierTime, goalTimerHigh / goalMultiplierTime);
         }
     }
 
@@ -64,8 +62,9 @@ public class Spawner : MonoBehaviour {
         rightWallPos = new Vector3(wallX + wallY, transform.position.y, transform.position.z);
 
         // Instantiate
-        Instantiate(leftWall, leftWallPos, transform.rotation, transform);
-        Instantiate(rightWall, rightWallPos, transform.rotation, transform);
+        Instantiate(leftWall, leftWallPos, leftWall.transform.rotation, transform);
+        Instantiate(rightWall, rightWallPos, rightWall.transform.rotation, transform);
+
 
         leftWall.GetComponent<Rigidbody2D>().gravityScale = gravity;
         rightWall.GetComponent<Rigidbody2D>().gravityScale = gravity;
@@ -73,30 +72,20 @@ public class Spawner : MonoBehaviour {
 
     void Goal()
     {
-        // Gravity
-        goalLowGravityLimit = Mathf.Clamp((gravityModifier / Player.currentScale), 0.1f, 0.3f);
-        goalHighGravityLimit = Mathf.Clamp((gravityModifier / Player.currentScale), 0.3f, .75f);
-        goalGravity = Random.Range(lowGravityLimit, highGravityLimit);
-
         // Position
-        leftGoalPos = new Vector3(Random.Range(-2f, -.5f), 5.75f, transform.position.z);
-        rightGoalPos = new Vector3(Random.Range(.5f, 2f), 5.75f, transform.position.z);
+        goalPos = new Vector3(Random.Range(-5f, 5f), Random.Range(8f, 4.5f), 0);
 
         // Instantiate
-        Instantiate(leftGoal, leftGoalPos, transform.rotation);
-        Instantiate(rightGoal, rightGoalPos, transform.rotation);
+        GameObject circle = Instantiate(sphere, transform);
+        var scale = Random.Range(0.5f, 2f);
+        sphere.transform.localScale = new Vector3(scale, scale,0);
+        sphere.transform.position = goalPos;
 
-        leftGoal.GetComponent<Rigidbody2D>().gravityScale = goalGravity;
-        rightGoal.GetComponent<Rigidbody2D>().gravityScale = goalGravity;
+        // Color
+        goalColor = new Color(Random.value, Random.value, Random.value, 1f);
+        circle.GetComponent<SpriteRenderer>().material.color = goalColor;
 
-        // Collider
-        leftCollider = leftGoal.GetComponent<BoxCollider2D>();
-        rightCollider = rightGoal.GetComponent<BoxCollider2D>();
-
-
-
-        Dist = rightGoal.GetComponent<SpriteRenderer>().bounds.min.x - leftGoal.GetComponent<SpriteRenderer>().bounds.max.x;
-        Debug.Log(Dist);
-        leftCollider.size = new Vector3(Dist * 2, 1, 1);
+        // Gravity
+        sphere.GetComponent<Rigidbody2D>().gravityScale = goalGravity / (1 + scale);
     }
 }
