@@ -60,6 +60,7 @@ public class Player : MonoBehaviour {
         //
         // Mouse Input
         //
+        /*
         if(Input.GetMouseButton(0))
         {
             if (Camera.main.ScreenToWorldPoint(Input.mousePosition).x > -8.5f && Camera.main.ScreenToWorldPoint(Input.mousePosition).x < 8.5f)
@@ -76,7 +77,7 @@ public class Player : MonoBehaviour {
         if(Input.GetMouseButtonUp(0))
         {
             notTouching = true;
-        }
+        } */
     }
 
 
