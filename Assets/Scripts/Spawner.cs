@@ -63,8 +63,8 @@ public class Spawner : MonoBehaviour {
         gravity = Random.Range(lowGravityLimit, highGravityLimit);
 
         // Position
-        wallX = Random.Range(-8.5f, 6f);
-        wallY = Random.Range(0.7f, 2.5f);
+        wallX = Random.Range(-2.5f, 2f);
+        wallY = Random.Range(0.4f, 1f);
 
         leftWallPos = new Vector3(wallX, transform.position.y, transform.position.z);
         rightWallPos = new Vector3(wallX + wallY, transform.position.y, transform.position.z);
@@ -90,7 +90,7 @@ public class Spawner : MonoBehaviour {
     void Goal()
     {
         // Position
-        goalPos = new Vector3(Random.Range(-8f, 8f), Random.Range(8f, 4.5f), 0);
+        goalPos = new Vector3(Random.Range(-2.5f, 2.5f), Random.Range(3.75f, 7f), 0);
 
         // Instantiate
         GameObject circle = Instantiate(sphere, transform);
