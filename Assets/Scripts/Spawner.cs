@@ -7,10 +7,11 @@ public class Spawner : MonoBehaviour {
     // Wall
     public GameObject leftWall, rightWall;
     float wallX = 0, wallY = 0;
-    Vector3 leftWallPos, rightWallPos;
+    // Vector3 leftWallPos, rightWallPos;
     public GameObject wallCell;
     float cellHeight;
-    float cellXPos = 0;
+    float leftCellX = 0;
+    float rightCellX = 0;
 
     // Goals
     public GameObject sphere;
@@ -35,22 +36,6 @@ public class Spawner : MonoBehaviour {
     }
 
     void Update() {
-
-        /* if (obstacleTimer < Time.timeSinceLevelLoad)
-        {
-            if (lowLimit >= .1f)
-            {
-                lowLimit -= 0.1f;
-            }
-
-            if (highLimit >= 0.5f)
-            {
-                highLimit -= 0.1f;
-            }
-            Obstacle();
-            obstacleTimer = Time.timeSinceLevelLoad + Random.Range(lowLimit, highLimit);
-        } */
-
         if(obstacleTimer < Time.timeSinceLevelLoad)
         {
             Obstacle();
@@ -71,59 +56,95 @@ public class Spawner : MonoBehaviour {
         GameObject Wall = new GameObject("Wall");
         Wall.transform.position = new Vector3(0, 5, 0);
         int wallHeight = Random.Range(5, 12);
-        int wallWidth = Random.Range(1, 5);
+        float wallWidth = Random.Range(1.0f, 3.0f);
 
         // Left Wall
         GameObject leftWall = new GameObject("leftWall");
-        leftWall.transform.position = new Vector3(-1 * (wallWidth/2), Wall.transform.position.y, transform.position.z);
+        leftWall.transform.position = new Vector3((wallWidth/-2), Wall.transform.position.y, transform.position.z);
+
+        // Right Wall
+        GameObject rightWall = new GameObject("rightWall");
+        rightWall.transform.position = new Vector3((wallWidth / 2), Wall.transform.position.y, transform.position.z);
 
         leftWall.transform.SetParent(Wall.transform);
+        rightWall.transform.SetParent(Wall.transform);
 
         for(int i = 0; i < wallHeight; i++)
         {
+            leftCellX = leftWall.transform.position.x;
+            rightCellX = rightWall.transform.position.x;
             int moveLeft = Random.Range(0, 3);
             if(moveLeft < 2)
             {
                 int piecesPlaced = 0;
                 if (piecesPlaced < 1)
                 {
-                    cellXPos -= 0.5f;
+                    leftCellX -= (cellHeight / 2);
+                    rightCellX -= (cellHeight / 2);
                     piecesPlaced++;
-                    Debug.Log("left");
                 } else if(piecesPlaced == 1)
                 {
                     piecesPlaced++;
-                    Debug.Log("keep");
                 } else
                 {
                     piecesPlaced = 0;
-                    Debug.Log("reset");
                 }
             } else
             {
                 int piecesPlaced = 0;
                 if (piecesPlaced < 1)
                 {
-                    cellXPos += 0.5f;
+                    leftCellX += (cellHeight/ 2);
+                    rightCellX += (cellHeight / 2);
                     piecesPlaced++;
-                    Debug.Log("left");
                 }
                 else if (piecesPlaced == 1)
                 {
                     piecesPlaced++;
-                    Debug.Log("keep");
                 }
                 else
                 {
                     piecesPlaced = 0;
-                    Debug.Log("reset");
                 }
             }      
 
-            Vector3 wallCellPos = new Vector3(cellXPos, leftWall.transform.position.y + (i * cellHeight), wallCell.transform.position.z);
-            var cell = Instantiate(wallCell);
-            cell.transform.SetParent(leftWall.transform);
-            cell.transform.position = wallCellPos;
+            // Spawn Cells
+            Vector3 leftWallCellPos = new Vector3(leftCellX, leftWall.transform.position.y + (i * cellHeight), wallCell.transform.position.z);
+            Vector3 rightWallCellPos = new Vector3(rightCellX, rightWall.transform.position.y + (i * cellHeight), wallCell.transform.position.z);
+
+            // Left Cell
+            var leftCell = Instantiate(wallCell);
+            leftCell.transform.SetParent(leftWall.transform);
+            leftCell.transform.position = leftWallCellPos;
+            leftCell.tag = "Wall";
+
+            // Right Cell
+            var rightCell = Instantiate(wallCell);
+            rightCell.transform.SetParent(rightWall.transform);
+            rightCell.transform.position = rightWallCellPos;
+            rightCell.tag = "Wall";
+
+            // Add gravity
+            if (Wall.GetComponent<Rigidbody2D>() == null)
+            {
+                Wall.AddComponent<Rigidbody2D>();
+            }
+
+            // Gravity
+            lowGravityLimit = Mathf.Clamp((gravityModifier / Player.currentScale), 0.001f, 0.05f);
+            highGravityLimit = Mathf.Clamp((gravityModifier / Player.currentScale), 0.1f, .3f);
+            gravity = Random.Range(lowGravityLimit, highGravityLimit);
+
+            Wall.GetComponent<Rigidbody2D>().gravityScale = gravity;
+            // Create bounds and collider
+            if (Wall.GetComponent<BoxCollider2D>() == null)
+            {
+                // Bottom Trigger
+                Wall.AddComponent<BoxCollider2D>();
+                Wall.GetComponent<BoxCollider2D>().size = new Vector2(wallWidth - cellHeight, 0.25f);
+                Wall.GetComponent<BoxCollider2D>().offset = new Vector2(cellHeight/-2, wallHeight/2);
+                Wall.GetComponent<BoxCollider2D>().isTrigger = true;
+            }
         }
 
         /*
