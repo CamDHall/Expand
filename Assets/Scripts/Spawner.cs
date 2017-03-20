@@ -8,6 +8,8 @@ public class Spawner : MonoBehaviour {
     public GameObject leftWall, rightWall;
     float wallX = 0, wallY = 0;
     Vector3 leftWallPos, rightWallPos;
+    public GameObject wallCell;
+    float cellHeight;
 
     // Goals
     public GameObject sphere;
@@ -22,17 +24,19 @@ public class Spawner : MonoBehaviour {
     // Timer
     float obstacleTimer, goalTimer;
     public float timerProgress = 0.99f, goalTimerProgress = 0.9999f;
-    float lowLimit = 3f, highLimit = 5f;
+    float lowLimit = 6f, highLimit = 10f;
     float goalTimerLow = 0.1f, goalTimerHigh = 0.5f, goalMultiplierTime;
 
 	void Start () {
-        obstacleTimer = Time.time + 1f;
-        goalTimer = Time.time + 2f;
+        obstacleTimer = Time.timeSinceLevelLoad + 1f;
+        goalTimer = Time.timeSinceLevelLoad + 2f;
+        cellHeight = wallCell.GetComponent<SpriteRenderer>().sprite.bounds.size.y;
+        Debug.Log(cellHeight);
     }
 
     void Update() {
 
-        if (obstacleTimer < Time.time)
+        /* if (obstacleTimer < Time.timeSinceLevelLoad)
         {
             if (lowLimit >= .1f)
             {
@@ -44,19 +48,59 @@ public class Spawner : MonoBehaviour {
                 highLimit -= 0.1f;
             }
             Obstacle();
-            obstacleTimer = Time.time + Random.Range(lowLimit, highLimit);
+            obstacleTimer = Time.timeSinceLevelLoad + Random.Range(lowLimit, highLimit);
+        } */
+
+        if(obstacleTimer < Time.timeSinceLevelLoad)
+        {
+            Obstacle();
+            obstacleTimer = Time.timeSinceLevelLoad + Random.Range(lowLimit, highLimit);
         }
 
-        if(goalTimer < Time.time)
+        if(goalTimer < Time.timeSinceLevelLoad)
         {
             Goal();
-            goalMultiplierTime = Time.time / 50f;
-            goalTimer = Time.time + Random.Range(goalTimerLow / goalMultiplierTime, goalTimerHigh / goalMultiplierTime);
+            goalMultiplierTime = Time.timeSinceLevelLoad / Random.Range(50f, 60f);
+            goalTimer = Time.timeSinceLevelLoad + Random.Range(goalTimerLow / goalMultiplierTime, goalTimerHigh / goalMultiplierTime);
         }
     }
 
     void Obstacle()
     {
+        // Parent Wall
+        GameObject Wall = new GameObject("Wall");
+        Wall.transform.position = new Vector3(0, 5, 0);
+        int wallHeight = Random.Range(5, 12);
+        int wallWidth = Random.Range(1, 5);
+        // Left Wall
+        GameObject leftWall = new GameObject("leftWall");
+        leftWall.transform.position = new Vector3(-1 * (wallWidth/2), Wall.transform.position.y, transform.position.z);
+
+        leftWall.transform.SetParent(Wall.transform);
+
+        for(int i = 0; i < wallHeight; i++)
+        {
+            float cellXPos = leftWall.transform.position.x;
+
+            int choice = Random.Range(0, 4);
+            if(choice == 2)
+            {
+                cellXPos -= cellHeight;
+            }
+
+            if(choice == 1)
+            {
+                cellXPos += cellHeight;
+            }
+            
+
+            Vector3 wallCellPos = new Vector3(cellXPos, leftWall.transform.position.y + (i * cellHeight), wallCell.transform.position.z);
+            var cell = Instantiate(wallCell);
+            cell.transform.SetParent(leftWall.transform);
+            cell.transform.position = wallCellPos;
+        }
+
+        /*
         // Gravity
         lowGravityLimit = Mathf.Clamp((gravityModifier / Player.currentScale), 0.001f, 0.05f);
         highGravityLimit = Mathf.Clamp((gravityModifier / Player.currentScale), 0.1f, .3f);
@@ -85,6 +129,7 @@ public class Spawner : MonoBehaviour {
 
         leftWall.GetComponent<Rigidbody2D>().gravityScale = gravity;
         rightWall.GetComponent<Rigidbody2D>().gravityScale = gravity;
+        */
     }
 
     void Goal()

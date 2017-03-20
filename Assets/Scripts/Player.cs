@@ -55,29 +55,6 @@ public class Player : MonoBehaviour {
         {
             transform.localScale = Vector3.Lerp(transform.localScale, newScale, speed * Time.deltaTime);
         }
-
-
-        //
-        // Mouse Input
-        //
-        /*
-        if(Input.GetMouseButton(0))
-        {
-            if (Camera.main.ScreenToWorldPoint(Input.mousePosition).x > -8.5f && Camera.main.ScreenToWorldPoint(Input.mousePosition).x < 8.5f)
-            {
-                Vector3 Pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                transform.position = new Vector3(Pos.x, transform.position.y, 0);
-            }
-
-            addMass += (.001f * Time.deltaTime);
-            notTouching = false;
-            transform.localScale = new Vector3(transform.localScale.x + addMass, transform.localScale.y + addMass, 0);
-        }
-
-        if(Input.GetMouseButtonUp(0))
-        {
-            notTouching = true;
-        } */
     }
 
 

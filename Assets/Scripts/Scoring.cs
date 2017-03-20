@@ -11,7 +11,7 @@ public class Scoring : MonoBehaviour {
     float displayScore;
 
 	void Start () {
-
+        Score = 0;
 	}
 	
 	void Update () {
