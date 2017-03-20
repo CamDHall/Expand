@@ -5,13 +5,12 @@ using UnityEngine;
 public class Spawner : MonoBehaviour {
 
     // Wall
+    public Walls walls;
     public GameObject leftWall, rightWall;
     float wallX = 0, wallY = 0;
-    // Vector3 leftWallPos, rightWallPos;
     public GameObject wallCell;
     float cellHeight;
-    float leftCellX = 0;
-    float rightCellX = 0;
+    float leftCellX = 0, rightCellX = 0;
 
     // Goals
     public GameObject sphere;
@@ -38,7 +37,8 @@ public class Spawner : MonoBehaviour {
     void Update() {
         if(obstacleTimer < Time.timeSinceLevelLoad)
         {
-            Obstacle();
+            walls.CreateWall();
+            // Obstacle();
             obstacleTimer = Time.timeSinceLevelLoad + Random.Range(lowLimit, highLimit);
         }
 
@@ -52,6 +52,7 @@ public class Spawner : MonoBehaviour {
 
     void Obstacle()
     {
+        /*
         // Parent Wall
         GameObject Wall = new GameObject("Wall");
         Wall.transform.position = new Vector3(0, 5, 0);
@@ -153,7 +154,7 @@ public class Spawner : MonoBehaviour {
                 Wall.GetComponent<BoxCollider2D>().offset = new Vector2(0, 2);
                 Wall.GetComponent<BoxCollider2D>().isTrigger = true;
             }
-        }
+        } */
     }
 
     void Goal()
