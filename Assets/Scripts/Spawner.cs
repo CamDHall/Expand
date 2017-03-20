@@ -10,6 +10,7 @@ public class Spawner : MonoBehaviour {
     Vector3 leftWallPos, rightWallPos;
     public GameObject wallCell;
     float cellHeight;
+    float cellXPos = 0;
 
     // Goals
     public GameObject sphere;
@@ -31,7 +32,6 @@ public class Spawner : MonoBehaviour {
         obstacleTimer = Time.timeSinceLevelLoad + 1f;
         goalTimer = Time.timeSinceLevelLoad + 2f;
         cellHeight = wallCell.GetComponent<SpriteRenderer>().sprite.bounds.size.y;
-        Debug.Log(cellHeight);
     }
 
     void Update() {
@@ -72,6 +72,7 @@ public class Spawner : MonoBehaviour {
         Wall.transform.position = new Vector3(0, 5, 0);
         int wallHeight = Random.Range(5, 12);
         int wallWidth = Random.Range(1, 5);
+
         // Left Wall
         GameObject leftWall = new GameObject("leftWall");
         leftWall.transform.position = new Vector3(-1 * (wallWidth/2), Wall.transform.position.y, transform.position.z);
@@ -80,19 +81,44 @@ public class Spawner : MonoBehaviour {
 
         for(int i = 0; i < wallHeight; i++)
         {
-            float cellXPos = leftWall.transform.position.x;
-
-            int choice = Random.Range(0, 4);
-            if(choice == 2)
+            int moveLeft = Random.Range(0, 3);
+            if(moveLeft < 2)
             {
-                cellXPos -= cellHeight;
-            }
-
-            if(choice == 1)
+                int piecesPlaced = 0;
+                if (piecesPlaced < 1)
+                {
+                    cellXPos -= 0.5f;
+                    piecesPlaced++;
+                    Debug.Log("left");
+                } else if(piecesPlaced == 1)
+                {
+                    piecesPlaced++;
+                    Debug.Log("keep");
+                } else
+                {
+                    piecesPlaced = 0;
+                    Debug.Log("reset");
+                }
+            } else
             {
-                cellXPos += cellHeight;
-            }
-            
+                int piecesPlaced = 0;
+                if (piecesPlaced < 1)
+                {
+                    cellXPos += 0.5f;
+                    piecesPlaced++;
+                    Debug.Log("left");
+                }
+                else if (piecesPlaced == 1)
+                {
+                    piecesPlaced++;
+                    Debug.Log("keep");
+                }
+                else
+                {
+                    piecesPlaced = 0;
+                    Debug.Log("reset");
+                }
+            }      
 
             Vector3 wallCellPos = new Vector3(cellXPos, leftWall.transform.position.y + (i * cellHeight), wallCell.transform.position.z);
             var cell = Instantiate(wallCell);
