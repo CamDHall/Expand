@@ -57,6 +57,7 @@ public class Spawner : MonoBehaviour {
         Wall.transform.position = new Vector3(0, 5, 0);
         int wallHeight = Random.Range(5, 12);
         float wallWidth = Random.Range(1.0f, 3.0f);
+        float bottomWidth = 0;
 
         // Left Wall
         GameObject leftWall = new GameObject("leftWall");
@@ -113,16 +114,23 @@ public class Spawner : MonoBehaviour {
             Vector3 rightWallCellPos = new Vector3(rightCellX, rightWall.transform.position.y + (i * cellHeight), wallCell.transform.position.z);
 
             // Left Cell
-            var leftCell = Instantiate(wallCell);
+            GameObject leftCell = Instantiate(wallCell);
             leftCell.transform.SetParent(leftWall.transform);
             leftCell.transform.position = leftWallCellPos;
             leftCell.tag = "Wall";
 
             // Right Cell
-            var rightCell = Instantiate(wallCell);
+            GameObject rightCell = Instantiate(wallCell);
             rightCell.transform.SetParent(rightWall.transform);
             rightCell.transform.position = rightWallCellPos;
             rightCell.tag = "Wall";
+
+            // Get Extents
+            if(i == 0)
+            {
+                bottomWidth = rightCell.GetComponent<BoxCollider2D>().bounds.max.x - leftCell.GetComponent<BoxCollider2D>().bounds.min.x;
+
+            } 
 
             // Add gravity
             if (Wall.GetComponent<Rigidbody2D>() == null)
@@ -141,42 +149,11 @@ public class Spawner : MonoBehaviour {
             {
                 // Bottom Trigger
                 Wall.AddComponent<BoxCollider2D>();
-                Wall.GetComponent<BoxCollider2D>().size = new Vector2(wallWidth - cellHeight, 0.25f);
-                Wall.GetComponent<BoxCollider2D>().offset = new Vector2(cellHeight/-2, wallHeight/2);
+                Wall.GetComponent<BoxCollider2D>().size = new Vector2(bottomWidth, 0.25f);
+                Wall.GetComponent<BoxCollider2D>().offset = new Vector2(0, 2);
                 Wall.GetComponent<BoxCollider2D>().isTrigger = true;
             }
         }
-
-        /*
-        // Gravity
-        lowGravityLimit = Mathf.Clamp((gravityModifier / Player.currentScale), 0.001f, 0.05f);
-        highGravityLimit = Mathf.Clamp((gravityModifier / Player.currentScale), 0.1f, .3f);
-        gravity = Random.Range(lowGravityLimit, highGravityLimit);
-
-        // Position
-        wallX = Random.Range(-2.5f, 2f);
-        wallY = Random.Range(0.4f, 1f);
-
-        leftWallPos = new Vector3(wallX, transform.position.y, transform.position.z);
-        rightWallPos = new Vector3(wallX + wallY, transform.position.y, transform.position.z);
-
-        // Instantiate
-        var left = Instantiate(leftWall, leftWallPos, leftWall.transform.rotation, transform);
-        var right = Instantiate(rightWall, rightWallPos, rightWall.transform.rotation, transform);
-
-        float Dist = (left.transform.position - right.transform.position).magnitude * 2.1f;
-
-        Vector3 colSize = new Vector3(Dist, 1f, 0);
-
-        left.GetComponent<BoxCollider2D>().size = colSize;
-        right.GetComponent<BoxCollider2D>().size = new Vector3(Dist, 1f, 0);
-
-        left.GetComponent<BoxCollider2D>().offset = new Vector3((colSize.x / 2) + 0.5f, 0, 0);
-        right.GetComponent<BoxCollider2D>().offset = new Vector3((-1f * (colSize.x / 2)) - 0.5f, 0, 0);
-
-        leftWall.GetComponent<Rigidbody2D>().gravityScale = gravity;
-        rightWall.GetComponent<Rigidbody2D>().gravityScale = gravity;
-        */
     }
 
     void Goal()
