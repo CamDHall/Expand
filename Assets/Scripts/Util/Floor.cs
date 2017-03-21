@@ -8,7 +8,7 @@ public class Floor : MonoBehaviour {
     {
         if (coll.gameObject.tag == "Goal")
         {
-            Destroy(coll.gameObject, .25f);
+            Destroy(coll.gameObject, 0.25f);
         }
     }
 

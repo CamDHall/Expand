@@ -6,27 +6,29 @@ public class Walls : MonoBehaviour {
 
     // Parent info
     GameObject Wall;
+    Vector2 wallCenter;
 
-    public GameObject verticalWall, horizontalWall;
+    public GameObject verticalWall, horizontalWall, center;
 
     float wallHeight = 0, wallWidth = 0;
     string lastPoint ="none";
     Vector3 lastPos;
     
 	void Start () {
-        Wall = new GameObject("Wall");
-        Wall.transform.position = new Vector3(0, 3, 0);
+
 	}
 
     public virtual void CreateWall()
     {
+        Wall = new GameObject("Wall");
+        Wall.transform.position = new Vector3(Random.Range(-0.5f, 0.5f), 6, 0);
         wallHeight = Random.Range(6, 20);
-        wallWidth = Random.Range(2.0f, 3.0f);
+        wallWidth = Random.Range(1.5f, 2.5f);
 
         // Left Wall
         GameObject leftWall = new GameObject("leftWall");
         leftWall.transform.SetParent(Wall.transform);
-        leftWall.transform.position = new Vector3(-(wallWidth / 2), 3, 0);
+        leftWall.transform.position = new Vector3(-(wallWidth / 2), Wall.transform.position.y, 0);
         lastPos = leftWall.transform.position;
 
         // Right Wall
@@ -141,7 +143,21 @@ public class Walls : MonoBehaviour {
                 rightHorizontalRightCell.transform.position = new Vector3(rightHorizontalLeftCell.transform.position.x + wallWidth, rightHorizontalLeftCell.transform.position.y, 0);
                 rightHorizontalRightCell.transform.SetParent(rightWall.transform);
             }
-
         }
+
+        Instantiate(center, wallCenter, Quaternion.identity);
+
+        Falling();
+    }
+
+    void Falling()
+    {
+        float gravity = 0.5f / Player.currentScale;
+        Debug.Log(gravity);
+
+        // Add components
+        Wall.AddComponent<Rigidbody2D>();
+
+        Wall.GetComponent<Rigidbody2D>().gravityScale = gravity;
     }
 }
