@@ -9,6 +9,9 @@ public class Shapes : MonoBehaviour {
     Vector3 newShapePos;
     float shapeXLowLimit, shapeXHighLimit, shapeYLowLimit, shapeYHighLimit;
 
+    // Color Pieces
+    public GameObject colorPiecesPrefab;
+
     // Choices
     int shapeChoice = 0;
 
@@ -28,15 +31,20 @@ public class Shapes : MonoBehaviour {
         newShapePos = new Vector3(Random.Range(shapeXLowLimit, shapeXHighLimit), Random.Range(shapeYLowLimit, shapeYHighLimit), 0);
         shapeChoice = Random.Range(0, 3);
 
+        float gravity = Player.currentScale / 10;
+
         if(shapeChoice == 0)
         {
-            Instantiate(circle, newShapePos, Quaternion.identity);
+            GameObject newCircle = Instantiate(circle, newShapePos, Quaternion.identity);
+            newCircle.GetComponent<Rigidbody2D>().gravityScale = gravity;
         } else if(shapeChoice == 1)
         {
-            Instantiate(square, newShapePos, Quaternion.identity);
+            GameObject newSquare = Instantiate(square, newShapePos, Quaternion.identity);
+            newSquare.GetComponent<Rigidbody2D>().gravityScale = gravity;
         } else
         {
-            Instantiate(triangle, newShapePos, Quaternion.identity);
+            GameObject newTriangle = Instantiate(triangle, newShapePos, Quaternion.identity);
+            newTriangle.GetComponent<Rigidbody2D>().gravityScale = gravity;
         }
     } 
 }
