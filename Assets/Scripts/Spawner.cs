@@ -7,6 +7,9 @@ public class Spawner : MonoBehaviour {
     // Wall
     // public Walls walls;
 
+    // Shapes
+    public Shapes shapes;
+
     // Goals
     public GameObject sphere;
     public static Vector3 goalPos;
@@ -32,6 +35,7 @@ public class Spawner : MonoBehaviour {
         if(obstacleTimer < Time.timeSinceLevelLoad)
         {
             // walls.CreateWall();
+            shapes.GenerateShape();
             obstacleTimer = Time.timeSinceLevelLoad + Random.Range(lowLimit, highLimit);
         }
 
