@@ -5,7 +5,7 @@ using UnityEngine;
 public class Spawner : MonoBehaviour {
 
     // Wall
-    public Walls walls;
+    // public Walls walls;
 
     // Goals
     public GameObject sphere;
@@ -31,7 +31,7 @@ public class Spawner : MonoBehaviour {
     void Update() {
         if(obstacleTimer < Time.timeSinceLevelLoad)
         {
-            walls.CreateWall();
+            // walls.CreateWall();
             obstacleTimer = Time.timeSinceLevelLoad + Random.Range(lowLimit, highLimit);
         }
 
