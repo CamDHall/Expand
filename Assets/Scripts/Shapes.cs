@@ -28,6 +28,11 @@ public class Shapes : MonoBehaviour {
         shapeYHighLimit = 6;
 	}
 
+    void Update()
+    {
+
+    }
+
     public virtual void GenerateShape()
     {
         newShapePos = new Vector3(Random.Range(shapeXLowLimit, shapeXHighLimit), Random.Range(shapeYLowLimit, shapeYHighLimit), 0);
