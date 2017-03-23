@@ -10,6 +10,9 @@ public class Spawner : MonoBehaviour {
     // Shapes
     public Shapes shapes;
 
+    // Pieces
+
+
     // Goals
     public GameObject sphere;
     public static Vector3 goalPos;
@@ -26,9 +29,14 @@ public class Spawner : MonoBehaviour {
     float lowLimit = 6f, highLimit = 10f;
     float goalTimerLow = 0.1f, goalTimerHigh = 0.5f, goalMultiplierTime;
 
+    float piecesTimer;
+    public float piecesLowLimit = 30f, piecesHighLimit = 50f;
+
 	void Start () {
         obstacleTimer = Time.timeSinceLevelLoad + 1f;
         goalTimer = Time.timeSinceLevelLoad + 2f;
+
+        piecesTimer = Time.timeSinceLevelLoad + 10f;
     }
 
     void Update() {
@@ -44,6 +52,12 @@ public class Spawner : MonoBehaviour {
             Goal();
             goalMultiplierTime = Time.timeSinceLevelLoad / Random.Range(50f, 60f);
             goalTimer = Time.timeSinceLevelLoad + Random.Range(goalTimerLow / goalMultiplierTime, goalTimerHigh / goalMultiplierTime);
+        }
+
+        if(piecesTimer < Time.timeSinceLevelLoad)
+        {
+            piecesTimer = Time.timeSinceLevelLoad + Random.Range(piecesLowLimit, piecesHighLimit);
+            shapes.GenerateShapePiece();
         }
     }
 

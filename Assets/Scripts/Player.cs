@@ -15,6 +15,16 @@ public class Player : MonoBehaviour {
     public float speed = 0.6f;
     bool notTouching = true;
 
+    // Rings
+    List<Color32> totalColors = new List<Color32>()
+    {
+        new Color32(0x4C, 0xB5, 0xAE, 0xFF),
+        new Color32(0x81, 0xD6, 0xE3, 0xFF),
+        new Color32(0xA9, 0xDB, 0xB8, 0xFF),
+        new Color32(0xF4, 0x00, 0x00, 0xFF),
+        new Color32(0xB4, 0xB8, 0xAB, 0xFF)
+    };
+
     public static bool madeGoal = false;
 
     // Camera Shake
@@ -69,6 +79,24 @@ public class Player : MonoBehaviour {
         {
             Scoring.Score += (coll.transform.localScale.x * 50f);
             Destroy(coll.gameObject);
+        }
+
+        if(coll.gameObject.tag == "circlePiece")
+        {
+            Destroy(coll.gameObject);
+            LevelManager.circleFillLevel += 0.25f;
+        }
+
+        if(coll.gameObject.tag == "squarePiece")
+        {
+            Destroy(coll.gameObject);
+            LevelManager.squareFillLevel += 0.25f;
+        }
+
+        if(coll.gameObject.tag == "trianglePiece")
+        {
+            Destroy(coll.gameObject);
+            LevelManager.triangleFillLevel += 0.25f;
         }
     }
 

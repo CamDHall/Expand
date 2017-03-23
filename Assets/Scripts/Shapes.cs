@@ -9,21 +9,23 @@ public class Shapes : MonoBehaviour {
     Vector3 newShapePos;
     float shapeXLowLimit, shapeXHighLimit, shapeYLowLimit, shapeYHighLimit;
 
+    // Shape Pieces
+    public GameObject circlePiece, squarePiece, trianglePiece;
+    Vector3 newPiecePos;
+
     // Color Pieces
     public GameObject colorPiecesPrefab;
+    Vector3 colorPiecePos;
 
     // Choices
     int shapeChoice = 0;
+    int pieceChoice = 0;
 
 	void Start () {
         shapeXLowLimit = -2.5f;
         shapeXHighLimit = 2.5f;
         shapeYLowLimit = 3;
         shapeYHighLimit = 6;
-	}
-	
-	void Update () {
-		
 	}
 
     public virtual void GenerateShape()
@@ -35,7 +37,7 @@ public class Shapes : MonoBehaviour {
 
         if(shapeChoice == 0)
         {
-            GameObject newCircle = Instantiate(circle, newShapePos, Quaternion.identity);
+            GameObject newCircle = Instantiate(circle, newShapePos, Quaternion.identity);            
             newCircle.GetComponent<Rigidbody2D>().gravityScale = gravity;
         } else if(shapeChoice == 1)
         {
@@ -45,6 +47,30 @@ public class Shapes : MonoBehaviour {
         {
             GameObject newTriangle = Instantiate(triangle, newShapePos, Quaternion.identity);
             newTriangle.GetComponent<Rigidbody2D>().gravityScale = gravity;
+        }
+    }
+
+    public virtual void GenerateShapePiece()
+    {
+        newPiecePos = new Vector3(Random.Range(shapeXLowLimit, shapeXHighLimit), Random.Range(shapeYLowLimit, shapeYHighLimit), 0);
+        pieceChoice = Random.Range(0, 3);
+
+        float gravity = Player.currentScale / 8;
+
+        if (pieceChoice == 0)
+        {
+            GameObject newCirclePiece = Instantiate(circlePiece, newPiecePos, Quaternion.identity);
+            newCirclePiece.GetComponent<Rigidbody2D>().gravityScale = gravity;
+        }
+        else if (pieceChoice == 1)
+        {
+            GameObject newSquarePiece = Instantiate(squarePiece, newPiecePos, Quaternion.identity);
+            newSquarePiece.GetComponent<Rigidbody2D>().gravityScale = gravity;
+        }
+        else
+        {
+            GameObject newTrianglePiece = Instantiate(squarePiece, newPiecePos, Quaternion.identity);
+            newTrianglePiece.GetComponent<Rigidbody2D>().gravityScale = gravity;
         }
     } 
 }
