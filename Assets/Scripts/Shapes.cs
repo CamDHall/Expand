@@ -12,13 +12,13 @@ public class Shapes : MonoBehaviour {
     // Shape Pieces
     public GameObject circlePiece, squarePiece, trianglePiece;
     Vector3 newPiecePos;
+    public static List<Vector3> circlePositions;
 
     // Color Pieces
     public GameObject colorPiecesPrefab;
     Vector3 colorPiecePos;
 
     // Choices
-    int shapeChoice = 0;
     int pieceChoice = 0;
 
 	void Start () {
@@ -26,20 +26,23 @@ public class Shapes : MonoBehaviour {
         shapeXHighLimit = 2.5f;
         shapeYLowLimit = 3;
         shapeYHighLimit = 6;
+
+        circlePositions = new List<Vector3>();
 	}
 
     public virtual void GenerateShape()
     {
         newShapePos = new Vector3(Random.Range(shapeXLowLimit, shapeXHighLimit), Random.Range(shapeYLowLimit, shapeYHighLimit), 0);
-        shapeChoice = Random.Range(0, 3);
 
         float gravity = Player.currentScale / 10;
 
-        if(shapeChoice == 0)
+        if(Spawner.shapeChoice == 0)
         {
             GameObject newCircle = Instantiate(circle, newShapePos, Quaternion.identity);            
             newCircle.GetComponent<Rigidbody2D>().gravityScale = gravity;
-        } else if(shapeChoice == 1)
+
+            circlePositions.Add(newCircle.transform.position);
+        } else if(Spawner.shapeChoice == 1)
         {
             GameObject newSquare = Instantiate(square, newShapePos, Quaternion.identity);
             newSquare.GetComponent<Rigidbody2D>().gravityScale = gravity;

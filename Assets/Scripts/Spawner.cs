@@ -9,6 +9,7 @@ public class Spawner : MonoBehaviour {
 
     // Shapes
     public Shapes shapes;
+    public static int shapeChoice = 0;
 
     // Pieces
 
@@ -26,7 +27,7 @@ public class Spawner : MonoBehaviour {
     // Timer
     float shapeTimer, goalTimer;
     public float timerProgress = 0.99f, goalTimerProgress = 0.9999f;
-    float lowLimit = 20f, highLimit = 40f;
+    float lowLimit = 20f, highLimit = 28f;
     float goalTimerLow = 0.5f, goalTimerHigh = 0.8f, goalMultiplierTime;
 
     float piecesTimer;
@@ -36,12 +37,15 @@ public class Spawner : MonoBehaviour {
         shapeTimer = Time.timeSinceLevelLoad + 1f;
         goalTimer = Time.timeSinceLevelLoad + 2f;
 
+        shapeChoice = 0;
+
         piecesTimer = Time.timeSinceLevelLoad + 8f;
     }
 
     void Update() {
         if(shapeTimer < Time.timeSinceLevelLoad)
         {
+            shapeChoice = Random.Range(0, 3);
             shapes.GenerateShape();
             shapeTimer = Time.timeSinceLevelLoad + Random.Range(lowLimit, highLimit);
         }

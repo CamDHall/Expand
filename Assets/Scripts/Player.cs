@@ -91,19 +91,19 @@ public class Player : MonoBehaviour {
         if(coll.gameObject.tag == "circlePiece")
         {
             Destroy(coll.gameObject);
-            LevelManager.circleFillLevel += 0.5f;
+            LevelManager.circleFillLevel += 1f;
         }
 
         if(coll.gameObject.tag == "squarePiece")
         {
             Destroy(coll.gameObject);
-            LevelManager.squareFillLevel += 0.25f;
+            LevelManager.squareFillLevel += 0.5f;
         }
 
         if(coll.gameObject.tag == "trianglePiece")
         {
             Destroy(coll.gameObject);
-            LevelManager.triangleFillLevel += 0.2f;
+            LevelManager.triangleFillLevel += 0.5f;
         }
     }
 
@@ -112,5 +112,10 @@ public class Player : MonoBehaviour {
         CameraShake.gameObject.SendMessage("DoShake");
         transform.localScale -= new Vector3(transform.localScale.x * 0.85f, transform.localScale.y * 0.85f, 0);
         Destroy(coll.gameObject);
+    }
+
+    public void CircleTouch()
+    {
+
     }
 }
