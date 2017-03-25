@@ -24,27 +24,26 @@ public class Spawner : MonoBehaviour {
     float lowGravityLimit = 0.09f, highGravityLimit = 0.1f;
     
     // Timer
-    float obstacleTimer, goalTimer;
+    float shapeTimer, goalTimer;
     public float timerProgress = 0.99f, goalTimerProgress = 0.9999f;
-    float lowLimit = 6f, highLimit = 10f;
-    float goalTimerLow = 0.1f, goalTimerHigh = 0.5f, goalMultiplierTime;
+    float lowLimit = 20f, highLimit = 40f;
+    float goalTimerLow = 0.5f, goalTimerHigh = 0.8f, goalMultiplierTime;
 
     float piecesTimer;
-    public float piecesLowLimit = 30f, piecesHighLimit = 50f;
+    float piecesLowLimit = 8f, piecesHighLimit = 10f;
 
 	void Start () {
-        obstacleTimer = Time.timeSinceLevelLoad + 1f;
+        shapeTimer = Time.timeSinceLevelLoad + 1f;
         goalTimer = Time.timeSinceLevelLoad + 2f;
 
-        piecesTimer = Time.timeSinceLevelLoad + 10f;
+        piecesTimer = Time.timeSinceLevelLoad + 8f;
     }
 
     void Update() {
-        if(obstacleTimer < Time.timeSinceLevelLoad)
+        if(shapeTimer < Time.timeSinceLevelLoad)
         {
-            // walls.CreateWall();
             shapes.GenerateShape();
-            obstacleTimer = Time.timeSinceLevelLoad + Random.Range(lowLimit, highLimit);
+            shapeTimer = Time.timeSinceLevelLoad + Random.Range(lowLimit, highLimit);
         }
 
         if(goalTimer < Time.timeSinceLevelLoad)

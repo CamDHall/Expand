@@ -13,8 +13,6 @@ public class LevelManager : MonoBehaviour {
 	}
 	
 	void Update () {
-        Debug.Log(circleFillLevel);
-
         circleUI.GetComponent<Image>().fillAmount = circleFillLevel;
         squareUI.GetComponent<Image>().fillAmount = squareFillLevel;
         triangleUI.GetComponent<Image>().fillAmount = triangleFillLevel;

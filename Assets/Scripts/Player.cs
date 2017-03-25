@@ -36,6 +36,13 @@ public class Player : MonoBehaviour {
 
     void Update()
     {
+
+        // TEST MOUSE
+            Vector3 Pos = Input.mousePosition;
+            Pos = Camera.main.ScreenToWorldPoint(Pos);
+            transform.position = new Vector3(Pos.x, transform.position.y, transform.position.z);
+        // TEST MOUSE
+
         if(transform.localScale.x < 0.75f)
         {
             SceneManager.LoadScene("End");
@@ -84,7 +91,7 @@ public class Player : MonoBehaviour {
         if(coll.gameObject.tag == "circlePiece")
         {
             Destroy(coll.gameObject);
-            LevelManager.circleFillLevel += 0.25f;
+            LevelManager.circleFillLevel += 0.5f;
         }
 
         if(coll.gameObject.tag == "squarePiece")
@@ -96,7 +103,7 @@ public class Player : MonoBehaviour {
         if(coll.gameObject.tag == "trianglePiece")
         {
             Destroy(coll.gameObject);
-            LevelManager.triangleFillLevel += 0.25f;
+            LevelManager.triangleFillLevel += 0.2f;
         }
     }
 
