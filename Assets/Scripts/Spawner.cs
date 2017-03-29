@@ -53,7 +53,7 @@ public class Spawner : MonoBehaviour {
         if(goalTimer < Time.timeSinceLevelLoad)
         {
             Goal();
-            goalMultiplierTime = Time.timeSinceLevelLoad / Random.Range(50f, 60f);
+            goalMultiplierTime = Time.timeSinceLevelLoad / Random.Range(65f, 75f);
             goalTimer = Time.timeSinceLevelLoad + Random.Range(goalTimerLow / goalMultiplierTime, goalTimerHigh / goalMultiplierTime);
         }
 

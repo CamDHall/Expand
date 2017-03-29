@@ -5,14 +5,17 @@ using UnityEngine.UI;
 
 public class TouchManager : MonoBehaviour
 {
-    public Image hexagonFill, squareFill, triangleFill;
+    public Image hexagonFill, squareFill, triangleFill; // Levels
     public GameObject hexagonPiece, squarePiece, trianglePiece;
 
     // Shape Information
     public static Vector3 circleShapePos, squareShapePos, triangleShapePos;
-    public static int _hexes, _squares, _triangles;
+    public static int _hexes, _squares, _triangles; // Number of hexes
 
-    float redTimer;
+    public Image hexBackgroundUI, squareBackgroundUI, triangleBackgroundUI;
+    public Image hexFillUI, squareFillUI, triangleFillUI;
+
+    string currentUIFlash;
 
     void Start()
     {
@@ -26,7 +29,8 @@ public class TouchManager : MonoBehaviour
 
     public void HexagonUI()
     {
-        if (LevelManager.hexagonFillLevel >= 1)
+        currentUIFlash = "HEX";
+        if (LevelManager.hexUIFill >= 1)
         {
             if(_hexes > 0)
             {
@@ -35,17 +39,19 @@ public class TouchManager : MonoBehaviour
                 Destroy(deleteCircle);
             } else
             {
-                // Animation
+                StartCoroutine("FillFlash");
             }
         } else
         {
-            // Animation
+            StartCoroutine("Flash");
         }
     }
 
     public void SquareUI()
     {
-        if (LevelManager.squareFillLevel >= 1)
+        currentUIFlash = "SQUARE";
+
+        if (LevelManager.squareUIFill >= 1)
         {
             if (_squares > 0)
             {
@@ -54,18 +60,20 @@ public class TouchManager : MonoBehaviour
                 Destroy(deleteSquare);
             } else
             {
-                // Animation
+                StartCoroutine("FillFlash");
             }
         }
         else
         {
-            // Animation
+            StartCoroutine("Flash");
         }
     }
 
     public void TriangleUI()
     {
-        if (LevelManager.triangleFillLevel >= 1)
+        currentUIFlash = "TRIANGLE";
+
+        if (LevelManager.triangleUIFill >= 1)
         {
             if(_triangles > 0)
             {
@@ -74,12 +82,62 @@ public class TouchManager : MonoBehaviour
                 Destroy(deleteTriangle);
             }   else
             {
-                // Animation
+                StartCoroutine("FillFlash");
             }
         }
         else
         {
-            // Animation
+            StartCoroutine("Flash");
+        }
+    }
+
+    IEnumerator Flash()
+    {
+        if(currentUIFlash == "HEX")
+        {
+            hexBackgroundUI.GetComponent<Image>().color = Color.grey;
+            yield return new WaitForSeconds(1.5f);
+            hexBackgroundUI.GetComponent<Image>().color = Color.white;
+        }
+
+        if(currentUIFlash == "SQUARE")
+        {
+            squareBackgroundUI.GetComponent<Image>().color = Color.grey;
+            yield return new WaitForSeconds(1.5f);
+            squareBackgroundUI.GetComponent<Image>().color = Color.white;
+        }
+
+        if (currentUIFlash == "TRIANGLE")
+        {
+            Debug.Log("Triangle");
+            triangleBackgroundUI.GetComponent<Image>().color = Color.grey;
+            yield return new WaitForSeconds(1.5f);
+            triangleBackgroundUI.GetComponent<Image>().color = Color.white;
+        }
+    }
+
+    IEnumerator FillFlash()
+    {
+        if (currentUIFlash == "HEX")
+        {
+            hexFillUI.GetComponent<Image>().color = Color.grey;
+            yield return new WaitForSeconds(1.5f);
+            hexFillUI.GetComponent<Image>().color = Color.red;
+        }
+
+        if (currentUIFlash == "SQUARE")
+        {
+            squareFillUI.GetComponent<Image>().color = Color.grey;
+            yield return new WaitForSeconds(1.5f);
+            squareFillUI.GetComponent<Image>().color = Color.red;
+        }
+
+        if (currentUIFlash == "TRIANGLE")
+        {
+            Debug.Log("Triangle");
+            triangleFillUI.GetComponent<Image>().color = Color.grey;
+            yield return new WaitForSeconds(1.5f);
+            triangleFillUI.GetComponent<Image>().color = Color.red;
         }
     }
 }

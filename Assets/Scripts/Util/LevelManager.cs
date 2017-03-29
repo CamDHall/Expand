@@ -13,7 +13,8 @@ public class LevelManager : MonoBehaviour {
     int shapeChoice;
 
     // Image and fill
-	public static float hexagonFillLevel, squareFillLevel, triangleFillLevel, levelFill;
+    public static float hexUIFill, squareUIFill, triangleUIFill;
+    public static float levelFill;
     public Image hexagonUI, squareUI, triangleUI;
 
     // Level images
@@ -25,9 +26,9 @@ public class LevelManager : MonoBehaviour {
         squareUIPos = squareUI.transform.position;
         triangleUIPos = triangleUI.transform.position;
 
-        hexagonFillLevel = 0;
-        squareFillLevel = 0;
-        triangleFillLevel = 0;
+        hexUIFill = 0;
+        squareUIFill = 0;
+        triangleUIFill = 0;
 
         level = 0;
 
@@ -47,9 +48,9 @@ public class LevelManager : MonoBehaviour {
 	}
 	
 	void Update () {
-        hexagonUI.GetComponent<Image>().fillAmount = hexagonFillLevel;
-        squareUI.GetComponent<Image>().fillAmount = squareFillLevel;
-        triangleUI.GetComponent<Image>().fillAmount = triangleFillLevel;
+        hexagonUI.GetComponent<Image>().fillAmount = hexUIFill;
+        squareUI.GetComponent<Image>().fillAmount = squareUIFill;
+        triangleUI.GetComponent<Image>().fillAmount = triangleUIFill;
 
         _hexFill.GetComponent<Image>().fillAmount = levelFill;
         _squareFill.GetComponent<Image>().fillAmount = levelFill;
