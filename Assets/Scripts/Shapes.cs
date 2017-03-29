@@ -5,14 +5,13 @@ using UnityEngine;
 public class Shapes : MonoBehaviour {
     
     // Shapes
-    public GameObject circle, square, triangle;
+    public GameObject hexagon, square, triangle;
     Vector3 newShapePos;
     float shapeXLowLimit, shapeXHighLimit, shapeYLowLimit, shapeYHighLimit;
 
     // Shape Pieces
-    public GameObject circlePiece, squarePiece, trianglePiece;
+    public GameObject hexagonPiece, squarePiece, trianglePiece;
     Vector3 newPiecePos;
-    public static List<Vector3> circlePositions;
 
     // Color Pieces
     public GameObject colorPiecesPrefab;
@@ -26,8 +25,6 @@ public class Shapes : MonoBehaviour {
         shapeXHighLimit = 2.5f;
         shapeYLowLimit = 3;
         shapeYHighLimit = 6;
-
-        circlePositions = new List<Vector3>();
 	}
 
     public virtual void GenerateShape()
@@ -38,10 +35,8 @@ public class Shapes : MonoBehaviour {
 
         if(Spawner.shapeChoice == 0)
         {
-            GameObject newCircle = Instantiate(circle, newShapePos, Quaternion.identity);            
+            GameObject newCircle = Instantiate(hexagon, newShapePos, Quaternion.identity);            
             newCircle.GetComponent<Rigidbody2D>().gravityScale = gravity;
-
-            circlePositions.Add(newCircle.transform.position);
         } else if(Spawner.shapeChoice == 1)
         {
             GameObject newSquare = Instantiate(square, newShapePos, Quaternion.identity);
@@ -62,7 +57,7 @@ public class Shapes : MonoBehaviour {
 
         if (pieceChoice == 0)
         {
-            GameObject newCirclePiece = Instantiate(circlePiece, newPiecePos, Quaternion.identity);
+            GameObject newCirclePiece = Instantiate(hexagonPiece, newPiecePos, Quaternion.identity);
             newCirclePiece.GetComponent<Rigidbody2D>().gravityScale = gravity;
         }
         else if (pieceChoice == 1)
