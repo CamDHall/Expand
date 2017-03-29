@@ -37,6 +37,8 @@ public class TouchManager : MonoBehaviour
                 GameObject deleteCircle = GameObject.FindGameObjectWithTag("Circle");
                 deleteCircle.transform.DetachChildren();
                 Destroy(deleteCircle);
+
+                _hexes--; // Lower number of hex shapes in the game
             } else
             {
                 StartCoroutine("FillFlash");
@@ -58,6 +60,8 @@ public class TouchManager : MonoBehaviour
                 GameObject deleteSquare = GameObject.FindGameObjectWithTag("Square");
                 deleteSquare.transform.DetachChildren();
                 Destroy(deleteSquare);
+
+                _squares--; // Lower number of squares shapes in the game
             } else
             {
                 StartCoroutine("FillFlash");
@@ -80,6 +84,8 @@ public class TouchManager : MonoBehaviour
                 GameObject deleteTriangle = GameObject.FindGameObjectWithTag("Triangle");
                 deleteTriangle.transform.DetachChildren();
                 Destroy(deleteTriangle);
+
+                _triangles--; // Lower number of triangles shapes in the game
             }   else
             {
                 StartCoroutine("FillFlash");

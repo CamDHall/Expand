@@ -7,6 +7,7 @@ public class LevelManager : MonoBehaviour {
 
 
     public static int level = 0;
+    public static Color levelColor;
 
     // Track and pick shape
     public static string lastShape;
@@ -30,7 +31,8 @@ public class LevelManager : MonoBehaviour {
         squareUIFill = 0;
         triangleUIFill = 0;
 
-        level = 0;
+        // pick color
+        levelColor = Random.ColorHSV();
 
         // Create goal shapes
         shapeChoice = Random.Range(1, 3);
@@ -38,12 +40,15 @@ public class LevelManager : MonoBehaviour {
         if(shapeChoice == 1)
         {
             _hexBackground.gameObject.SetActive(true);
+            _hexFill.color = levelColor;
         } else if(shapeChoice == 2)
         {
             _squareBackground.gameObject.SetActive(true);
+            _squareFill.color = levelColor;
         } else
         {
             _triangleBackground.gameObject.SetActive(true);
+            _triangleFill.color = levelColor;
         }
 	}
 	

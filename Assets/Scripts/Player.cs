@@ -111,6 +111,7 @@ public class Player : MonoBehaviour {
         if (coll.gameObject.tag == "colorPiece")
         {
             LevelManager.levelFill++;
+            Destroy(coll.gameObject, 0.4f);
         }
 
         if (coll.gameObject.tag == "Hexagon" || coll.gameObject.tag == "Square" || coll.gameObject.tag == "Triangle")
@@ -118,6 +119,13 @@ public class Player : MonoBehaviour {
             transform.localScale -= new Vector3(transform.localScale.x * 0.6f, transform.localScale.y * 0.6f, 0);
             coll.gameObject.transform.DetachChildren();
             Destroy(coll.gameObject);
+
+            if (coll.gameObject.tag == "Hexagon")
+                TouchManager._hexes--;
+            if (coll.gameObject.tag == "Square")
+                TouchManager._squares--;
+            if (coll.gameObject.tag == "Triangle")
+                TouchManager._triangles--;
         } 
     }
 }

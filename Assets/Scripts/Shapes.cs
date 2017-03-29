@@ -37,14 +37,17 @@ public class Shapes : MonoBehaviour {
         {
             GameObject newCircle = Instantiate(hexagon, newShapePos, Quaternion.identity);            
             newCircle.GetComponent<Rigidbody2D>().gravityScale = gravity;
+            TouchManager._hexes++;
         } else if(Spawner.shapeChoice == 1)
         {
             GameObject newSquare = Instantiate(square, newShapePos, Quaternion.identity);
             newSquare.GetComponent<Rigidbody2D>().gravityScale = gravity;
+            TouchManager._squares++;
         } else
         {
             GameObject newTriangle = Instantiate(triangle, newShapePos, Quaternion.identity);
             newTriangle.GetComponent<Rigidbody2D>().gravityScale = gravity;
+            TouchManager._triangles++;
         }
     }
 

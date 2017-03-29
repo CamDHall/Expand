@@ -5,7 +5,7 @@ using UnityEngine;
 public class ColorPiece : MonoBehaviour {
 
 	void Start () {
-		
+        GetComponent<SpriteRenderer>().color = LevelManager.levelColor;
 	}
 	
 	void Update () {
