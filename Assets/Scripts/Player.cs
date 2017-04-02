@@ -85,8 +85,7 @@ public class Player : MonoBehaviour {
             Scoring.Score += (coll.transform.localScale.x * 50f);
 
             var newScale = new Vector3(transform.localScale.x + coll.gameObject.transform.localScale.x, transform.localScale.x + coll.gameObject.transform.localScale.y, 0);
-            transform.localScale = Vector3.Lerp(transform.localScale, newScale, 3f * Time.deltaTime);
-            // transform.localScale = new Vector3(transform.localScale.x + coll.gameObject.transform.localScale.x, transform.localScale.x + coll.gameObject.transform.localScale.y, 0);
+            transform.localScale = Vector3.Lerp(transform.localScale, newScale, 1f * Time.deltaTime);
             Destroy(coll.gameObject);
         }
 
@@ -110,8 +109,8 @@ public class Player : MonoBehaviour {
 
         if (coll.gameObject.tag == "colorPiece")
         {
-            LevelManager.levelFill++;
-            Destroy(coll.gameObject, 0.4f);
+            LevelManager.levelFill += (1 - (0.01f * (LevelManager.level)));
+            Destroy(coll.gameObject, 0.2f);
         }
 
         if (coll.gameObject.tag == "Hexagon" || coll.gameObject.tag == "Square" || coll.gameObject.tag == "Triangle")

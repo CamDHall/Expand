@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour {
 
@@ -37,6 +38,8 @@ public class LevelManager : MonoBehaviour {
         // Create goal shapes
         shapeChoice = Random.Range(1, 3);
 
+        level++;
+
         if(shapeChoice == 1)
         {
             _hexBackground.gameObject.SetActive(true);
@@ -60,5 +63,10 @@ public class LevelManager : MonoBehaviour {
         _hexFill.GetComponent<Image>().fillAmount = levelFill;
         _squareFill.GetComponent<Image>().fillAmount = levelFill;
         _triangleFill.GetComponent<Image>().fillAmount = levelFill;
+
+        if(levelFill >= 1)
+        {
+            SceneManager.LoadScene("WinScreen");
+        }
     }
 }
