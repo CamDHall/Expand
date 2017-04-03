@@ -26,7 +26,6 @@ public class Player : MonoBehaviour {
 
     void Update()
     {
-        Debug.Log(TouchManager._hexes);
         // TEST MOUSE
         if (Input.GetMouseButton(0))
         {

@@ -38,8 +38,6 @@ public class LevelManager : MonoBehaviour {
         // Create goal shapes
         shapeChoice = Random.Range(1, 3);
 
-        level++;
-
         if(shapeChoice == 1)
         {
             _hexBackground.gameObject.SetActive(true);
@@ -67,6 +65,7 @@ public class LevelManager : MonoBehaviour {
         if(levelFill >= 1)
         {
             SceneManager.LoadScene("WinScreen");
+            level++;
         }
     }
 }
