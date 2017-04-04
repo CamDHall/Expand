@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour {
 
-    public static int level = 10;
+    public static int level = 0;
     public static Color levelColor;
 
     // Track and pick shape
