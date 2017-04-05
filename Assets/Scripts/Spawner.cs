@@ -7,6 +7,8 @@ public class Spawner : MonoBehaviour {
     // Wall
     // public Walls walls;
 
+    public GameObject shapeBar;
+
     // Shapes
     public Shapes shapes;
     public static int shapeChoice = 0;
@@ -30,16 +32,13 @@ public class Spawner : MonoBehaviour {
     float lowLimit = 20f, highLimit = 28f;
     float goalTimerLow = 0.5f, goalTimerHigh = 0.8f, goalMultiplierTime;
 
-    float piecesTimer;
-    float piecesLowLimit = 8f, piecesHighLimit = 10f;
-
 	void Start () {
         shapeTimer = Time.timeSinceLevelLoad + 1f;
         goalTimer = Time.timeSinceLevelLoad + 2f;
 
         shapeChoice = 0;
 
-        piecesTimer = Time.timeSinceLevelLoad + 8f;
+        Instantiate(shapeBar);
     }
 
     void Update() {
@@ -55,12 +54,6 @@ public class Spawner : MonoBehaviour {
             Goal();
             goalMultiplierTime = Time.timeSinceLevelLoad / Random.Range(65f, 75f);
             goalTimer = Time.timeSinceLevelLoad + Random.Range(goalTimerLow / goalMultiplierTime, goalTimerHigh / goalMultiplierTime);
-        }
-
-        if(piecesTimer < Time.timeSinceLevelLoad)
-        {
-            piecesTimer = Time.timeSinceLevelLoad + Random.Range(piecesLowLimit, piecesHighLimit);
-            shapes.GenerateShapePiece();
         }
     }
 

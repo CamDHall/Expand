@@ -5,22 +5,45 @@ using UnityEngine;
 public class ShapeBar : MonoBehaviour {
 
     public GameObject greyHex, greySquare, greyTriangle;
-    int numberOfBars, barHeight;
+    int numberOfBars = 0, barHeight;
     Vector2 Pos;
+    public static List<GameObject> shapeColorPieces;
 
 	void Start () {
+        shapeColorPieces = new List<GameObject>();
+
+        // Bar height
+        if(numberOfBars <= 3 )
+        {
+            barHeight = 3;
+        } else
+        {
+            barHeight = 5;
+        }
 
         for(int i = 0; i < barHeight; i++)
         {
-            Pos = new Vector2(-2.5f, -4.5f + i);
+            Pos = new Vector2(-2.5f, -4.5f + (i * 0.75f));
             int choice = Random.Range(0, 3);
 
             if (choice == 0)
-                Instantiate(greyHex, Pos, Quaternion.identity);
+            {
+                var hexShape = Instantiate(greyHex, Pos, Quaternion.identity);
+                hexShape.transform.SetParent(transform);
+                shapeColorPieces.Add(hexShape);
+            }
             else if (choice == 1)
-                Instantiate(greySquare, Pos, Quaternion.identity);
+            {
+                var squareShape = Instantiate(greySquare, Pos, Quaternion.identity);
+                squareShape.transform.SetParent(transform);
+                shapeColorPieces.Add(squareShape);
+            }
             else
-                Instantiate(greyTriangle, Pos, Quaternion.identity);
+            {
+                var triangleShape = Instantiate(greyTriangle, Pos, Quaternion.identity);
+                triangleShape.transform.SetParent(transform);
+                shapeColorPieces.Add(triangleShape);
+            }
         }
 	}
 	
