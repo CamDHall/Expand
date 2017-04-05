@@ -12,7 +12,7 @@ public class Player : MonoBehaviour {
     // Scaling
     float shrink;
     Vector3 newScale;
-    public float speed = 0.6f;
+    float speed = 0.1f;
     bool notTouching = true;
 
     public static bool madeGoal = false;
@@ -20,13 +20,32 @@ public class Player : MonoBehaviour {
     // Camera Shake
     public GameObject CameraShake;
 
-	void Start () {
-        newScale = new Vector3(0.75f, 0.75f, 0);
-	}
+    void Start() {
+        newScale = new Vector3(0.9f, 0.9f, 0);
+    }
 
     void Update()
     {
-        if(transform.localScale.x < 0.75f)
+        // TEST MOUSE
+        if (Input.GetMouseButton(0))
+        {
+            Vector3 Pos = Input.mousePosition;
+            Pos = Camera.main.ScreenToWorldPoint(Pos);
+            transform.position = new Vector3(Pos.x, transform.position.y, transform.position.z);
+
+            notTouching = false;
+            addMass = Time.deltaTime / 10f;
+            transform.localScale = new Vector3(transform.localScale.x + addMass, transform.localScale.y + addMass, 0);
+
+        }
+
+        if(Input.GetMouseButtonUp(0))
+        {
+            notTouching = true;
+        }
+        // TEST MOUSE
+
+        if (transform.localScale.x < 0.5f)
         {
             SceneManager.LoadScene("End");
         }
@@ -40,65 +59,71 @@ public class Player : MonoBehaviour {
 
             if (touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Moved)
             {
-                addMass = Input.GetTouch(0).deltaTime / 5f;
+                addMass = Input.GetTouch(0).deltaTime / 10f;
                 notTouching = false;
                 transform.localScale = new Vector3(transform.localScale.x + addMass, transform.localScale.y + addMass, 0);
             }
 
-            if(touch.phase == TouchPhase.Ended)
+            if (touch.phase == TouchPhase.Ended)
             {
                 notTouching = true;
             }
         }
 
-        if(notTouching)
+        if (notTouching)
         {
-            transform.localScale = Vector3.Lerp(transform.localScale, newScale, speed * Time.deltaTime);
+            transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, speed * Time.deltaTime);
         }
-
-
-        //
-        // Mouse Input
-        //
-        /*
-        if(Input.GetMouseButton(0))
-        {
-            if (Camera.main.ScreenToWorldPoint(Input.mousePosition).x > -8.5f && Camera.main.ScreenToWorldPoint(Input.mousePosition).x < 8.5f)
-            {
-                Vector3 Pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                transform.position = new Vector3(Pos.x, transform.position.y, 0);
-            }
-
-            addMass += (.001f * Time.deltaTime);
-            notTouching = false;
-            transform.localScale = new Vector3(transform.localScale.x + addMass, transform.localScale.y + addMass, 0);
-        }
-
-        if(Input.GetMouseButtonUp(0))
-        {
-            notTouching = true;
-        } */
     }
 
 
     void OnTriggerEnter2D(Collider2D coll)
     {
-        if(coll.gameObject.tag == "Wall")
-        {
-            Scoring.Score += 50f;
-        }
-
-        if(coll.gameObject.tag == "Goal")
+        if (coll.gameObject.tag == "Goal")
         {
             Scoring.Score += (coll.transform.localScale.x * 50f);
+
+            var newScale = new Vector3(transform.localScale.x + coll.gameObject.transform.localScale.x, transform.localScale.x + coll.gameObject.transform.localScale.y, 0);
+            transform.localScale = Vector3.Lerp(transform.localScale, newScale, 1f * Time.deltaTime);
             Destroy(coll.gameObject);
         }
-    }
 
-    void OnCollisionEnter2D(Collision2D coll)
-    {
-        CameraShake.gameObject.SendMessage("DoShake");
-        transform.localScale -= new Vector3(transform.localScale.x * 0.85f, transform.localScale.y * 0.85f, 0);
-        Destroy(coll.gameObject);
+        if (coll.gameObject.tag == "hexagonPiece")
+        {
+            Destroy(coll.gameObject);
+            LevelManager.hexUIFill += 1f;
+        }
+
+        if (coll.gameObject.tag == "squarePiece")
+        {
+            Destroy(coll.gameObject);
+            LevelManager.squareUIFill += 1f;
+        }
+
+        if (coll.gameObject.tag == "trianglePiece")
+        {
+            Destroy(coll.gameObject);
+            LevelManager.triangleUIFill += 1f;
+        }
+
+        if (coll.gameObject.tag == "colorPiece")
+        {
+            LevelManager.levelFill += (1 - (0.01f * (LevelManager.level)));
+            Destroy(coll.gameObject, 0.2f);
+        }
+
+        if (coll.gameObject.tag == "Hexagon" || coll.gameObject.tag == "Square" || coll.gameObject.tag == "Triangle")
+        {
+            transform.localScale -= new Vector3(transform.localScale.x * 0.6f, transform.localScale.y * 0.6f, 0);
+            coll.gameObject.transform.DetachChildren();
+            Destroy(coll.gameObject);
+
+            if (coll.gameObject.tag == "Hexagon")
+                TouchManager._hexes--;
+            if (coll.gameObject.tag == "Square")
+                TouchManager._squares--;
+            if (coll.gameObject.tag == "Triangle")
+                TouchManager._triangles--;
+        } 
     }
 }
