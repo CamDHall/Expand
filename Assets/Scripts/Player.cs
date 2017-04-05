@@ -88,27 +88,8 @@ public class Player : MonoBehaviour {
             Destroy(coll.gameObject);
         }
 
-        if (coll.gameObject.tag == "hexagonPiece")
-        {
-            Destroy(coll.gameObject);
-            LevelManager.hexUIFill += 1f;
-        }
-
-        if (coll.gameObject.tag == "squarePiece")
-        {
-            Destroy(coll.gameObject);
-            LevelManager.squareUIFill += 1f;
-        }
-
-        if (coll.gameObject.tag == "trianglePiece")
-        {
-            Destroy(coll.gameObject);
-            LevelManager.triangleUIFill += 1f;
-        }
-
         if (coll.gameObject.tag == "colorPiece")
         {
-            LevelManager.levelFill += (1 - (0.01f * (LevelManager.level)));
             Destroy(coll.gameObject, 0.2f);
         }
 

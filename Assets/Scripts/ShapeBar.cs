@@ -9,21 +9,6 @@ public class ShapeBar : MonoBehaviour {
     Vector2 Pos;
 
 	void Start () {
-        if (LevelManager.level <= 3)
-            numberOfBars = 1;
-        else
-            numberOfBars = LevelManager.level;
-
-        if (LevelManager.level == 0)
-            barHeight = 1;
-        else if (LevelManager.level <= 2)
-            barHeight = 2;
-        else if (LevelManager.level <= 10)
-            barHeight = 3;
-        else if (LevelManager.level <= 25)
-            barHeight = 4;
-        else
-            barHeight = 5;
 
         for(int i = 0; i < barHeight; i++)
         {
