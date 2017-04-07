@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class ColorPiece : MonoBehaviour {
 
+    // Bar
     public Color defaultColor;
-
-	void Start () {
-        
-	}
 	
 	void Update () {
         if (transform.parent != null)
@@ -24,17 +21,19 @@ public class ColorPiece : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        bool containsHex = false;
-
         if (this.gameObject.tag == "hexColorPiece")
         {
-            for(int i = 0; i < ShapeBar.shapeColorPieces.Count; i++)
+            bool containsHex = false;
+
+            for (int i = 0; i < ShapeBar.shapeColorPieces.Count; i++)
             {
                 if (ShapeBar.shapeColorPieces[i].gameObject.tag == "barHex")
                 {
                     if (ShapeBar.shapeColorPieces[i].GetComponent<SpriteRenderer>().material.color == defaultColor)
                     {
                         ShapeBar.shapeColorPieces[i].GetComponent<SpriteRenderer>().material.color = Color.white;
+                        containsHex = true;
+                        LevelManager.numFilled++;
                         break;
                     }
                 }
@@ -56,6 +55,7 @@ public class ColorPiece : MonoBehaviour {
                     {
                         ShapeBar.shapeColorPieces[i].GetComponent<SpriteRenderer>().material.color = Color.white;
                         containsSquare = true;
+                        LevelManager.numFilled++;
                         break;
                     }
                 }
@@ -76,6 +76,8 @@ public class ColorPiece : MonoBehaviour {
                     if (ShapeBar.shapeColorPieces[i].GetComponent<SpriteRenderer>().material.color == defaultColor)
                     {
                         ShapeBar.shapeColorPieces[i].GetComponent<SpriteRenderer>().material.color = Color.white;
+                        LevelManager.numFilled++;
+                        containsTriangle = true;
                         break;
                     }
                 }

@@ -5,12 +5,15 @@ using UnityEngine;
 public class ShapeBar : MonoBehaviour {
 
     public GameObject greyHex, greySquare, greyTriangle;
-    int numberOfBars = 0, barHeight;
+    int numberOfBars = 0; 
+    public static int barHeight;
     Vector2 Pos;
     public static List<GameObject> shapeColorPieces;
+    public static bool spawnNewBar = false;
 
 	void Start () {
         shapeColorPieces = new List<GameObject>();
+        spawnNewBar = false;
 
         // Bar height
         if(numberOfBars <= 3 )
@@ -48,6 +51,6 @@ public class ShapeBar : MonoBehaviour {
 	}
 	
 	void Update () {
-		
+
 	}
 }

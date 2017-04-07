@@ -8,7 +8,7 @@ public class Spawner : MonoBehaviour {
     // public Walls walls;
 
     public GameObject shapeBar;
-
+    List<GameObject> currentShapeBars;
     // Shapes
     public Shapes shapes;
     public static int shapeChoice = 0;
@@ -29,7 +29,7 @@ public class Spawner : MonoBehaviour {
     // Timer
     float shapeTimer, goalTimer;
     public float timerProgress = 0.99f, goalTimerProgress = 0.9999f;
-    float lowLimit = 20f, highLimit = 28f;
+    float lowLimit = 6, highLimit = 9;
     float goalTimerLow = 0.5f, goalTimerHigh = 0.8f, goalMultiplierTime;
 
 	void Start () {
@@ -42,7 +42,13 @@ public class Spawner : MonoBehaviour {
     }
 
     void Update() {
-        if(shapeTimer < Time.timeSinceLevelLoad)
+        if (LevelManager.numFilled == ShapeBar.barHeight)
+        {
+            SpawnShapeBar();
+            LevelManager.numFilled = 0;
+        }
+
+        if (shapeTimer < Time.timeSinceLevelLoad)
         {
             shapeChoice = Random.Range(0, 3);
             shapes.GenerateShape();
@@ -74,5 +80,17 @@ public class Spawner : MonoBehaviour {
 
         // Gravity
         sphere.GetComponent<Rigidbody2D>().gravityScale = goalGravity / (1 + scale);
+    }
+
+    void SpawnShapeBar()
+    {
+        currentShapeBars = new List<GameObject> (GameObject.FindGameObjectsWithTag("ShapeBar"));
+        for (int i = 0; i < currentShapeBars.Count; i++)
+        {
+            currentShapeBars[i].transform.position = new Vector3(transform.position.x - (i + 1), currentShapeBars[i].transform.position.y, transform.position.z);
+        }
+        Instantiate(shapeBar);
+        ShapeBar.spawnNewBar = false;
+        currentShapeBars.Clear();
     }
 }
