@@ -12,6 +12,7 @@ public class ShapeBar : MonoBehaviour {
     public static bool spawnNewBar = false;
 
 	void Start () {
+        numberOfBars++;
         shapeColorPieces = new List<GameObject>();
         spawnNewBar = false;
 
@@ -48,9 +49,5 @@ public class ShapeBar : MonoBehaviour {
                 shapeColorPieces.Add(triangleShape);
             }
         }
-	}
-	
-	void Update () {
-
 	}
 }
