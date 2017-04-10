@@ -6,7 +6,8 @@ public class ColorPiece : MonoBehaviour {
 
     // Bar
     public Color defaultColor;
-	
+    bool containsHex = false, containsSquare = false, containsTriangle = false;
+
 	void Update () {
         if (transform.parent != null)
         {
@@ -23,8 +24,6 @@ public class ColorPiece : MonoBehaviour {
     {
         if (this.gameObject.tag == "hexColorPiece")
         {
-            bool containsHex = false;
-
             for (int i = 0; i < ShapeBar.shapeColorPieces.Count; i++)
             {
                 if (ShapeBar.shapeColorPieces[i].gameObject.tag == "barHex")
@@ -45,8 +44,6 @@ public class ColorPiece : MonoBehaviour {
 
         if(this.gameObject.tag == "squareColorPiece")
         {
-            bool containsSquare = false;
-
             for (int i = 0; i < ShapeBar.shapeColorPieces.Count; i++)
             {
                 if (ShapeBar.shapeColorPieces[i].gameObject.tag == "barSquare")
@@ -67,8 +64,6 @@ public class ColorPiece : MonoBehaviour {
 
         if(this.gameObject.tag == "triangleColorPiece")
         {
-            bool containsTriangle = false;
-
             for (int i = 0; i < ShapeBar.shapeColorPieces.Count; i++)
             {
                 if (ShapeBar.shapeColorPieces[i].gameObject.tag == "barTriangle")
@@ -94,6 +89,10 @@ public class ColorPiece : MonoBehaviour {
         foreach(GameObject shape in ShapeBar.shapeColorPieces)
         {
             shape.GetComponent<SpriteRenderer>().material.color = defaultColor;
+            containsHex = false;
+            containsSquare = false;
+            containsTriangle = false;
+            LevelManager.numFilled = 0;
         }
     }
 }

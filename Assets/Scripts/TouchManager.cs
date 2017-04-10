@@ -17,9 +17,6 @@ public class TouchManager : MonoBehaviour
         circleShapePos = new Vector3(6, 0, 0);
         squareShapePos = new Vector3(6, 0, 0);
         triangleShapePos = new Vector3(6, 0, 0);
-        _hexes = 0;
-        _squares = 0;
-        _triangles = 0;
     }
 
     /*
