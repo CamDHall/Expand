@@ -15,13 +15,15 @@ public class Player : MonoBehaviour {
     float speed = 0.1f;
     bool notTouching = true;
 
-    public static bool madeGoal = false;
+    public static bool death;
 
     // Camera Shake
     public GameObject CameraShake;
 
     void Start() {
-        newScale = new Vector3(0.9f, 0.9f, 0);
+        newScale = new Vector3(LevelManager.playerScale, LevelManager.playerScale, 0);
+        transform.localScale = newScale;
+        death = false;
     }
 
     void Update()
@@ -47,7 +49,7 @@ public class Player : MonoBehaviour {
 
         if (transform.localScale.x < 0.5f)
         {
-            SceneManager.LoadScene("End");
+            death = true;
         }
         currentScale = transform.localScale.x;
 

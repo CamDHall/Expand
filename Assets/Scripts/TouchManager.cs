@@ -7,14 +7,14 @@ public class TouchManager : MonoBehaviour
 {
 
     // Shape Information
-    public static Vector3 circleShapePos, squareShapePos, triangleShapePos;
+    public static Vector3 hexagonShapePos, squareShapePos, triangleShapePos;
     public static int _hexes, _squares, _triangles; // Number of hexes
 
     string currentUIFlash;
 
     void Start()
     {
-        circleShapePos = new Vector3(6, 0, 0);
+        hexagonShapePos = new Vector3(6, 0, 0);
         squareShapePos = new Vector3(6, 0, 0);
         triangleShapePos = new Vector3(6, 0, 0);
     }

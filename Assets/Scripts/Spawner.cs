@@ -9,6 +9,7 @@ public class Spawner : MonoBehaviour {
 
     public GameObject shapeBar;
     List<GameObject> currentShapeBars;
+    public List<GameObject> filledShapeBars;
     // Shapes
     public Shapes shapes;
     public static int shapeChoice = 0;
@@ -88,6 +89,7 @@ public class Spawner : MonoBehaviour {
         for (int i = 0; i < currentShapeBars.Count; i++)
         {
             currentShapeBars[i].transform.position = new Vector3(transform.position.x - (i + 1), currentShapeBars[i].transform.position.y, transform.position.z);
+            filledShapeBars.Add(currentShapeBars[i]);
         }
         Instantiate(shapeBar);
         ShapeBar.spawnNewBar = false;
