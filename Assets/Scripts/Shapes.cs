@@ -9,6 +9,7 @@ public class Shapes : MonoBehaviour {
     Vector3 newShapePos;
     float shapeXLowLimit, shapeXHighLimit, shapeYLowLimit, shapeYHighLimit;
     float gravity;
+    static public List<GameObject> obstacleShapes;
 
     // Color Pieces
     public GameObject colorPiecesPrefab;
@@ -23,6 +24,8 @@ public class Shapes : MonoBehaviour {
         shapeXHighLimit = 2.5f;
         shapeYLowLimit = 3;
         shapeYHighLimit = 6;
+
+        obstacleShapes = new List<GameObject>();
 	}
 
     public virtual void GenerateShape()
@@ -98,6 +101,7 @@ public class Shapes : MonoBehaviour {
     {
         GameObject newHex = Instantiate(hexagon, newShapePos, Quaternion.identity);
         newHex.GetComponent<Rigidbody2D>().gravityScale = gravity;
+        obstacleShapes.Add(newHex);
         TouchManager._hexes++;
         lastChoice = "Hex";
     } 
@@ -106,6 +110,7 @@ public class Shapes : MonoBehaviour {
     {
         GameObject newSquare = Instantiate(square, newShapePos, Quaternion.identity);
         newSquare.GetComponent<Rigidbody2D>().gravityScale = gravity;
+        obstacleShapes.Add(newSquare);
         TouchManager._squares++;
         lastChoice = "Square";
     }
@@ -114,6 +119,7 @@ public class Shapes : MonoBehaviour {
     {
         GameObject newTriangle = Instantiate(triangle, newShapePos, Quaternion.identity);
         newTriangle.GetComponent<Rigidbody2D>().gravityScale = gravity;
+        obstacleShapes.Add(newTriangle);
         TouchManager._triangles++;
         lastChoice = "Triangle";
     }
