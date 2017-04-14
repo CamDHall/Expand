@@ -8,15 +8,13 @@ public class LevelManager : MonoBehaviour {
 
     public static Color levelColor;
     public static int numFilled;
+    int numOfShapes = 0;
+    int deathCalled = 0;
 
-    public GameObject experienceBar; // Mesh
-
-    int[] triangles;
-    Vector2[] uvs;
-    Vector3[] vertices;
+    public GameObject experienceBar; // Initiate at beginging of round to fill with current experience
 
     // Level and Scaling
-    public static float playerLevel = 0, currentExperience = 0, requiredExperience = 0;
+    public static float playerLevel = 1, currentExperience = 0, requiredExperience = 0;
     public static float playerScale;
 
 
@@ -65,19 +63,21 @@ public class LevelManager : MonoBehaviour {
 
     void Update()
     {
-        if (Player.death)
+        if (Player.death && deathCalled == 0)
+        {
             Experience();
+            deathCalled++;
+        }
     }
 
     void Experience()
     {
-        int numOfShapes = 0;
-        
-        for(int i = 0; i < spawner.filledShapeBars.Count; i++)
+        experienceBar.SetActive(true);
+        for (int i = 0; i < spawner.filledShapeBars.Count; i++)
         {
             numOfShapes += spawner.filledShapeBars[i].transform.childCount;
         }
 
-        Debug.Log(numOfShapes + "Died"); 
+        currentExperience += numOfShapes;
     }
 }
