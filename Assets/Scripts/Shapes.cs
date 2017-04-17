@@ -8,70 +8,119 @@ public class Shapes : MonoBehaviour {
     public GameObject hexagon, square, triangle;
     Vector3 newShapePos;
     float shapeXLowLimit, shapeXHighLimit, shapeYLowLimit, shapeYHighLimit;
-
-    // Shape Pieces
-    public GameObject hexagonPiece, squarePiece, trianglePiece;
-    Vector3 newPiecePos;
+    float gravity;
+    static public List<GameObject> obstacleShapes;
 
     // Color Pieces
     public GameObject colorPiecesPrefab;
     Vector3 colorPiecePos;
 
     // Choices
-    int pieceChoice = 0;
+    string lastChoice;
+    int pieceChoice = 0, secondChoice;
 
 	void Start () {
         shapeXLowLimit = -2.5f;
         shapeXHighLimit = 2.5f;
         shapeYLowLimit = 3;
         shapeYHighLimit = 6;
+
+        obstacleShapes = new List<GameObject>();
 	}
 
     public virtual void GenerateShape()
     {
         newShapePos = new Vector3(Random.Range(shapeXLowLimit, shapeXHighLimit), Random.Range(shapeYLowLimit, shapeYHighLimit), 0);
 
-        float gravity = Player.currentScale / 10;
+        gravity = Player.currentScale / 10;
 
-        if(Spawner.shapeChoice == 0)
+        secondChoice = Random.Range(0, 5);
+        if (lastChoice == "Hex")
         {
-            GameObject newCircle = Instantiate(hexagon, newShapePos, Quaternion.identity);            
-            newCircle.GetComponent<Rigidbody2D>().gravityScale = gravity;
-            TouchManager._hexes++;
-        } else if(Spawner.shapeChoice == 1)
-        {
-            GameObject newSquare = Instantiate(square, newShapePos, Quaternion.identity);
-            newSquare.GetComponent<Rigidbody2D>().gravityScale = gravity;
-            TouchManager._squares++;
-        } else
-        {
-            GameObject newTriangle = Instantiate(triangle, newShapePos, Quaternion.identity);
-            newTriangle.GetComponent<Rigidbody2D>().gravityScale = gravity;
-            TouchManager._triangles++;
+            if (secondChoice == 0)
+            {
+                SpawnHex();
+            }
+            else if (secondChoice <= 2)
+            {
+                SpawnSquare();
+            }
+            else
+            {
+                SpawnTriangle();
+            }
         }
-    }
-
-    public virtual void GenerateShapePiece()
-    {
-        newPiecePos = new Vector3(Random.Range(shapeXLowLimit, shapeXHighLimit), Random.Range(shapeYLowLimit, shapeYHighLimit), 0);
-        pieceChoice = Random.Range(0, 3);
-
-        float gravity = Player.currentScale / 8;
-
-        if (pieceChoice == 0)
+        else if (lastChoice == "Square")
         {
-            GameObject newCirclePiece = Instantiate(hexagonPiece, newPiecePos, Quaternion.identity);
-            newCirclePiece.GetComponent<Rigidbody2D>().gravityScale = gravity;
+            if (secondChoice == 0)
+            {
+                SpawnSquare();
+            }
+            else if (secondChoice <= 2)
+            {
+                SpawnHex();
+            }
+            else
+            {
+                SpawnTriangle();
+            }
         }
-        else if (pieceChoice == 1)
+        else if (lastChoice == "Triangle")
         {
-            GameObject newSquarePiece = Instantiate(squarePiece, newPiecePos, Quaternion.identity);
-            newSquarePiece.GetComponent<Rigidbody2D>().gravityScale = gravity;
+            if (secondChoice == 0)
+            {
+                SpawnTriangle();
+            }
+            else if (secondChoice <= 2)
+            {
+                SpawnSquare();
+            }
+            else
+            {
+                SpawnHex();
+            }
         }
         else
         {
-            GameObject newTrianglePiece = Instantiate(squarePiece, newPiecePos, Quaternion.identity);
-            newTrianglePiece.GetComponent<Rigidbody2D>().gravityScale = gravity;
+            if (Spawner.shapeChoice == 0)
+            {
+                SpawnHex();
+            }
+            else if (Spawner.shapeChoice == 1)
+            {
+                SpawnSquare();
+            }
+            else
+            {
+                SpawnTriangle();
+            }
         }
+    }
+    
+    void SpawnHex()
+    {
+        GameObject newHex = Instantiate(hexagon, newShapePos, Quaternion.identity);
+        newHex.GetComponent<Rigidbody2D>().gravityScale = gravity;
+        obstacleShapes.Add(newHex);
+        TouchManager._hexes++;
+        lastChoice = "Hex";
     } 
+
+    void SpawnSquare()
+    {
+        GameObject newSquare = Instantiate(square, newShapePos, Quaternion.identity);
+        newSquare.GetComponent<Rigidbody2D>().gravityScale = gravity;
+        obstacleShapes.Add(newSquare);
+        TouchManager._squares++;
+        lastChoice = "Square";
+    }
+
+    void SpawnTriangle()
+    {
+        GameObject newTriangle = Instantiate(triangle, newShapePos, Quaternion.identity);
+        newTriangle.GetComponent<Rigidbody2D>().gravityScale = gravity;
+        obstacleShapes.Add(newTriangle);
+        TouchManager._triangles++;
+        lastChoice = "Triangle";
+    }
 }

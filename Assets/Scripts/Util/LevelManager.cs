@@ -6,39 +6,78 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour {
 
-    public static int level = 0;
     public static Color levelColor;
+    public static int numFilled;
+    int numOfShapes = 0;
+    int deathCalled = 0;
+
+    public GameObject experienceBar; // Initiate at beginging of round to fill with current experience
+
+    // Level and Scaling
+    public static float playerLevel = 1, currentExperience = 0, requiredExperience = 0;
+    public static float playerScale;
+
 
     // Track and pick shape
     public static string lastShape;
-    int shapeChoice;
 
-    // Level Grid
-    int width = 5;
-    int height = 5;
+    Spawner spawner;
 
-    // Image and fill
-    public static float hexUIFill, squareUIFill, triangleUIFill;
-    public static float levelFill;
-    public Image hexagonUI, squareUI, triangleUI;
+    void Awake()
+    {
+        if (playerLevel == 0)
+        {
+            playerScale = 0.8f;
+            requiredExperience = 100;
+        }
+        else if (playerLevel <= 10)
+        {
+            playerScale = (playerLevel / 15) + 0.8f;
+            requiredExperience = (playerLevel * 10) + 100;
+        }
+        else if (playerLevel <= 20)
+        {
+            playerScale = (playerLevel / 10) + 0.8f;
+            requiredExperience = (playerLevel * 30) + 100;
+        }
+     
+        else if (playerLevel <= 30)
+        {
+            playerScale = (playerLevel / 5) + 0.8f;
+            requiredExperience = (playerLevel * 50) + 100;
+        }
 
-    // Level images
-    public Image _squareBackground, _squareFill, _hexBackground, _hexFill, _triangleBackground, _triangleFill;
-    public static Vector2 hexagonUIPos, squareUIPos, triangleUIPos;
+        else
+        {
+            playerScale = (playerLevel / 4) + 0.8f;
+            requiredExperience = (playerLevel * 100) + 100;
+        }
 
-    void Start() {
-        hexagonUIPos = hexagonUI.transform.position;
-        squareUIPos = squareUI.transform.position;
-        triangleUIPos = triangleUI.transform.position;
-
-        hexUIFill = 0;
-        squareUIFill = 0;
-        triangleUIFill = 0;
+        numFilled = 0;
     }
 
-    void Update() {
-        hexagonUI.GetComponent<Image>().fillAmount = hexUIFill;
-        squareUI.GetComponent<Image>().fillAmount = squareUIFill;
-        triangleUI.GetComponent<Image>().fillAmount = triangleUIFill;
+    void Start()
+    {
+        spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>();
+    }
+
+    void Update()
+    {
+        if (Player.death && deathCalled == 0)
+        {
+            Experience();
+            deathCalled++;
+        }
+    }
+
+    void Experience()
+    {
+        experienceBar.SetActive(true);
+        for (int i = 0; i < spawner.filledShapeBars.Count; i++)
+        {
+            numOfShapes += spawner.filledShapeBars[i].transform.childCount;
+        }
+
+        currentExperience += numOfShapes;
     }
 }
