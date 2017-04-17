@@ -6,10 +6,11 @@ public class PowerUpManager : MonoBehaviour {
 
     public float freezeTimer;
     public bool freeze, damage, boost;
+    public int freezePowerups = 0, damagePowerups = 0, boostPowerups;
     List<GameObject> currentShapes;
 
 	void Start () {
-		
+
 	}
 	
 	void Update () {
