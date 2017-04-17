@@ -24,6 +24,19 @@ public class PowerUps : MonoBehaviour {
                 manager.freeze = true;
                 manager.freezeTimer = Time.timeSinceLevelLoad + 10f;
             }
+
+            // Destroy
+            if(this.gameObject.tag == "Damage")
+            {
+                manager.damage = true;
+            }
+
+            // Boost
+            if(this.gameObject.tag == "Boost")
+            {
+                manager.boost = true;
+            }
+
             Destroy(this.gameObject);
         }
     }

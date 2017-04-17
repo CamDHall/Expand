@@ -5,7 +5,7 @@ using UnityEngine;
 public class PowerUpManager : MonoBehaviour {
 
     public float freezeTimer;
-    public bool freeze;
+    public bool freeze, damage, boost;
     List<GameObject> currentShapes;
 
 	void Start () {
@@ -26,6 +26,18 @@ public class PowerUpManager : MonoBehaviour {
             UnFreeze();
             freeze = false;
         }
+
+        if(damage)
+        {
+            damage = false;
+            Explode();
+        }
+
+        if(boost)
+        {
+            boost = false;
+            Boost();
+        }
 	}
 
     void UnFreeze()
@@ -34,5 +46,20 @@ public class PowerUpManager : MonoBehaviour {
         {
             shape.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
         }
+    }
+
+    void Explode()
+    {
+        foreach(GameObject shape in Shapes.obstacleShapes)
+        {
+            shape.transform.DetachChildren();
+            Destroy(shape);
+        }
+    }
+
+    void Boost()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player.transform.localScale += new Vector3(5, 5, 0);
     }
 }
