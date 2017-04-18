@@ -10,8 +10,10 @@ public class Spawner : MonoBehaviour {
     public GameObject shapeBar;
     List<GameObject> currentShapeBars;
     public List<GameObject> filledShapeBars;
+    
     // Shapes
     public Shapes shapes;
+    public Goals goals;
     public static int shapeChoice = 0;
 
     // Powerups
@@ -19,13 +21,6 @@ public class Spawner : MonoBehaviour {
     float powerUpTimer, lowPowerLimit = 9f, highPowerLimit = 12f;
     int powerUpCounter = 0;
 
-    // Goals
-    public GameObject sphere;
-    public static Vector3 goalPos;
-    Color goalColor;
-
-    // Gravity
-    float gravity, goalGravity = 1.01f;
     float gravityModifier = 1.001f;
     float lowGravityLimit = 0.09f, highGravityLimit = 0.1f;
     
@@ -62,7 +57,7 @@ public class Spawner : MonoBehaviour {
         // Goals
         if(goalTimer < Time.timeSinceLevelLoad)
         {
-            Goal();
+            goals.Goal();
             goalMultiplierTime = Time.timeSinceLevelLoad / Random.Range(65f, 75f);
             goalTimer = Time.timeSinceLevelLoad + Random.Range(goalTimerLow / goalMultiplierTime, goalTimerHigh / goalMultiplierTime);
         }
@@ -72,25 +67,6 @@ public class Spawner : MonoBehaviour {
         {
 
         }
-    }
-
-    void Goal()
-    {
-        // Position
-        goalPos = new Vector3(Random.Range(-2.5f, 2.5f), Random.Range(3.75f, 7f), 0);
-
-        // Instantiate
-        GameObject circle = Instantiate(sphere, transform);
-        var scale = Random.Range(0.75f, 3f);
-        sphere.transform.localScale = new Vector3(scale, scale,0);
-        sphere.transform.position = goalPos;
-
-        // Color
-        goalColor = new Color(Random.value, Random.value, Random.value, 1f);
-        circle.GetComponent<SpriteRenderer>().material.color = goalColor;
-
-        // Gravity
-        sphere.GetComponent<Rigidbody2D>().gravityScale = goalGravity / (1 + scale);
     }
 
     void SpawnShapeBar()
