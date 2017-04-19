@@ -16,7 +16,7 @@ public class Shapes : MonoBehaviour {
 
     // Choices
     string lastChoice;
-    int pieceChoice = 0, secondChoice;
+    int pieceChoice = 0, choice;
 
 	void Start () {
         shapeXLowLimit = -2.5f;
@@ -27,20 +27,20 @@ public class Shapes : MonoBehaviour {
         obstacleShapes = new List<GameObject>();
 	}
 
-    public virtual void GenerateShape()
+    public void GenerateShape()
     {
         newShapePos = new Vector3(Random.Range(shapeXLowLimit, shapeXHighLimit), Random.Range(shapeYLowLimit, shapeYHighLimit), 0);
 
         gravity = Player.currentScale / 10;
 
-        secondChoice = Random.Range(0, 5);
+        choice = Random.Range(0, 5);
         if (lastChoice == "Hex")
         {
-            if (secondChoice == 0)
+            if (choice == 0)
             {
                 SpawnHex();
             }
-            else if (secondChoice <= 2)
+            else if (choice <= 2)
             {
                 SpawnSquare();
             }
@@ -51,11 +51,11 @@ public class Shapes : MonoBehaviour {
         }
         else if (lastChoice == "Square")
         {
-            if (secondChoice == 0)
+            if (choice == 0)
             {
                 SpawnSquare();
             }
-            else if (secondChoice <= 2)
+            else if (choice <= 2)
             {
                 SpawnHex();
             }
@@ -66,11 +66,11 @@ public class Shapes : MonoBehaviour {
         }
         else if (lastChoice == "Triangle")
         {
-            if (secondChoice == 0)
+            if (choice == 0)
             {
                 SpawnTriangle();
             }
-            else if (secondChoice <= 2)
+            else if (choice <= 2)
             {
                 SpawnSquare();
             }
@@ -81,11 +81,11 @@ public class Shapes : MonoBehaviour {
         }
         else
         {
-            if (Spawner.shapeChoice == 0)
+            if (Spawner.fairChoice == 0)
             {
                 SpawnHex();
             }
-            else if (Spawner.shapeChoice == 1)
+            else if (Spawner.fairChoice == 1)
             {
                 SpawnSquare();
             }

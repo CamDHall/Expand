@@ -14,11 +14,12 @@ public class Spawner : MonoBehaviour {
     // Shapes
     public Shapes shapes;
     public Goals goals;
-    public static int shapeChoice = 0;
+    public static int fairChoice = 0;
 
     // Powerups
+    public PowerUpManager manager;
     public GameObject freezePower, explodePower, expandPower;
-    float powerUpTimer, lowPowerLimit = 9f, highPowerLimit = 12f;
+    float powerUpTimer, lowPowerLimit = 12f, highPowerLimit = 16f;
     int powerUpCounter = 0;
 
     float gravityModifier = 1.001f;
@@ -27,14 +28,14 @@ public class Spawner : MonoBehaviour {
     // Misc Timer
     float shapeTimer, goalTimer;
     public float timerProgress = 0.99f, goalTimerProgress = 0.9999f;
-    float lowLimit = 6, highLimit = 9;
+    float lowLimit = 6, highLimit = 9; // Shape Timer
     float goalTimerLow = 0.5f, goalTimerHigh = 0.8f, goalMultiplierTime;
 
     void Start () {
         shapeTimer = Time.timeSinceLevelLoad + 1f;
         goalTimer = Time.timeSinceLevelLoad + 2f;
 
-        shapeChoice = 0;
+        fairChoice = 0;
 
         Instantiate(shapeBar);
     }
@@ -49,7 +50,7 @@ public class Spawner : MonoBehaviour {
         // Shapes
         if (shapeTimer < Time.timeSinceLevelLoad)
         {
-            shapeChoice = Random.Range(0, 3);
+            fairChoice = Random.Range(0, 3);
             shapes.GenerateShape();
             shapeTimer = Time.timeSinceLevelLoad + Random.Range(lowLimit, highLimit);
         }
@@ -65,7 +66,9 @@ public class Spawner : MonoBehaviour {
         // Powerups
         if(powerUpTimer < Time.timeSinceLevelLoad)
         {
-
+            fairChoice = Random.Range(0, 3);
+            manager.GeneratePowerUp();
+            powerUpTimer = Time.timeSinceLevelLoad + Random.Range(lowPowerLimit, highPowerLimit);
         }
     }
 
