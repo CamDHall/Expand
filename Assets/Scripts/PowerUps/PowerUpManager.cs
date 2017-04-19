@@ -4,28 +4,28 @@ using UnityEngine;
 
 public class PowerUpManager : MonoBehaviour {
 
-    public float freezeTimer;
+    static public float freezeTimer;
     public bool freeze, damage, boost;
     public int freezePowerups = 0, damagePowerups = 0, boostPowerups;
     List<GameObject> currentShapes;
 
 	void Start () {
-
+        freezeTimer = 0;
 	}
 	
 	void Update () {
 		if(freezeTimer > Time.timeSinceLevelLoad)
         {
-            foreach(GameObject shape in Shapes.obstacleShapes)
+            for(int i = 0; i < Shapes.obstacleShapes.Count; i++)
             {
-                shape.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+                Debug.Log(Shapes.obstacleShapes[i].name);
+                Shapes.obstacleShapes[i].GetComponent<Rigidbody2D>().drag = 5f;
             }
         }
 
-        if(freezeTimer <= Time.timeSinceLevelLoad && freeze)
+        if(freezeTimer <= Time.timeSinceLevelLoad)
         {
-            UnFreeze();
-            freeze = false;
+            // UnFreeze();
         }
 
         if(damage)

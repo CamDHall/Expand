@@ -23,6 +23,7 @@ public class PowerUps : MonoBehaviour {
             {
                 PositionPowerup();
                 manager.freezePowerups++;
+                PowerUpManager.freezeTimer = Time.timeSinceLevelLoad + 50f;
                 // manager.freeze = true;
                 // manager.freezeTimer = Time.timeSinceLevelLoad + 10f;
             }

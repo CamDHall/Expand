@@ -12,7 +12,6 @@ public class Shapes : MonoBehaviour {
     static public List<GameObject> obstacleShapes;
 
     // Color Pieces
-    public GameObject colorPiecesPrefab;
     Vector3 colorPiecePos;
 
     // Choices
