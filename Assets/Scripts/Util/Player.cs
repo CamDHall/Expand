@@ -94,6 +94,12 @@ public class Player : MonoBehaviour {
         {
             transform.localScale -= new Vector3(transform.localScale.x * 0.6f, transform.localScale.y * 0.6f, 0);
             coll.gameObject.transform.DetachChildren();
+
+            for (int i = Shapes.obstacleShapes.Count - 1; i >= 0; i--)
+            {
+                Shapes.obstacleShapes.Remove(Shapes.obstacleShapes[i]);
+            }
+
             Destroy(coll.gameObject);
         }
     }

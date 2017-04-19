@@ -5,6 +5,7 @@ using UnityEngine;
 public class PowerUpManager : MonoBehaviour {
 
     static public float freezeTimer;
+    float freezeDrag = 5;
     public bool freeze, damage, boost;
     public int freezePowerups = 0, damagePowerups = 0, boostPowerups;
     List<GameObject> currentShapes;
@@ -14,18 +15,28 @@ public class PowerUpManager : MonoBehaviour {
 	}
 	
 	void Update () {
-		if(freezeTimer > Time.timeSinceLevelLoad)
-        {
-            for(int i = 0; i < Shapes.obstacleShapes.Count; i++)
-            {
-                Debug.Log(Shapes.obstacleShapes[i].name);
-                Shapes.obstacleShapes[i].GetComponent<Rigidbody2D>().drag = 5f;
-            }
-        }
 
-        if(freezeTimer <= Time.timeSinceLevelLoad)
+        Debug.Log(freezeTimer);
+
+		if(freeze && freezeTimer > Time.timeSinceLevelLoad)
         {
-            // UnFreeze();
+            Debug.Log(freezeDrag);
+            if (freezeDrag > 0)
+            {
+                freezeDrag -= Time.deltaTime;
+            } else
+            {
+                freezeDrag = 5f;
+                freeze = false;
+            }
+
+            foreach(GameObject shape in Shapes.obstacleShapes)
+            {
+                shape.GetComponent<Rigidbody2D>().drag = freezeDrag;
+            }
+        } else
+        {
+            UnFreeze();
         }
 
         if(damage)
@@ -45,7 +56,11 @@ public class PowerUpManager : MonoBehaviour {
     {
         foreach (GameObject shape in Shapes.obstacleShapes)
         {
-            shape.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+            if (shape != null)
+            {
+                shape.GetComponent<Rigidbody2D>().drag = 0;
+                freezeDrag = 5f;
+            }
         }
     }
 
@@ -54,6 +69,10 @@ public class PowerUpManager : MonoBehaviour {
         foreach(GameObject shape in Shapes.obstacleShapes)
         {
             shape.transform.DetachChildren();
+            for (int i = Shapes.obstacleShapes.Count - 1; i >= 0; i--)
+            {
+                Shapes.obstacleShapes.Remove(Shapes.obstacleShapes[i]);
+            }
             Destroy(shape);
         }
     }
@@ -62,5 +81,10 @@ public class PowerUpManager : MonoBehaviour {
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         player.transform.localScale += new Vector3(5, 5, 0);
+    }
+
+    void GeneratePowerUp()
+    {
+
     }
 }

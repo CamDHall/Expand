@@ -6,11 +6,18 @@ public class Box : MonoBehaviour {
 
     void OnTriggerExit2D(Collider2D coll)
     {
-        if (coll.gameObject.tag == "Goal" || coll.gameObject.tag == "Triangle"
-            || coll.gameObject.tag == "Hexagon" || coll.gameObject.tag == "Square"
-            || coll.gameObject.tag == "circlePiece" || coll.gameObject.tag == "squarePiece"
-            || coll.gameObject.tag == "trianglePiece")
+        if (coll.gameObject.tag == "Goal" ||coll.gameObject.tag == "circlePiece" 
+            || coll.gameObject.tag == "squarePiece" || coll.gameObject.tag == "trianglePiece")
         {
+            Destroy(coll.gameObject, 0.25f);
+        }
+
+        if(coll.gameObject.tag == "Triangle" || coll.gameObject.tag == "Hexagon" || coll.gameObject.tag == "Square")
+        {
+            for(int i = Shapes.obstacleShapes.Count - 1; i >= 0; i--)
+            {
+                Shapes.obstacleShapes.Remove(Shapes.obstacleShapes[i]);
+            }
             Destroy(coll.gameObject, 0.25f);
         }
     }
