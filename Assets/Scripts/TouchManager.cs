@@ -42,8 +42,28 @@ public class TouchManager : MonoBehaviour
             {
                 //We should have hit something with a 2D Physics collider!
                 GameObject touchedObject = hitInformation.transform.gameObject;
-                //touchedObject should be the object someone touched.
-                Debug.Log("Touched " + touchedObject.transform.name);
+                if (touchedObject.tag == "Boost")
+                {
+                    PowerUpManager.boost = true;
+                    Destroy(touchedObject);
+                    PowerUpManager.currentPowerups.Remove(touchedObject);
+                    PowerUpManager.boostPowerups -= 1;
+                }
+                else if (touchedObject.tag == "Freeze")
+                {
+                    PowerUpManager.freeze = true;
+                    PowerUpManager.freezeTimer = Time.timeSinceLevelLoad + 5f;
+                    Destroy(touchedObject);
+                    PowerUpManager.currentPowerups.Remove(touchedObject);
+                    PowerUpManager.freezePowerups -= 1;
+                }
+                else if (touchedObject.tag == "Damage")
+                {
+                    PowerUpManager.damage = true;
+                    Destroy(touchedObject);
+                    PowerUpManager.currentPowerups.Remove(touchedObject);
+                    PowerUpManager.damagePowerups -= 1;
+                }
             }
         }
     }

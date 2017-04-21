@@ -8,6 +8,8 @@ public class ExperienceBar : MonoBehaviour {
     float distCovered;
     float elapsedTime;
     public Image fill;
+    public Button returnToMenu, playAgain;
+    public Text Lives;
 
     void Awake()
     {
@@ -15,8 +17,6 @@ public class ExperienceBar : MonoBehaviour {
     }
 	
 	void Update () {
-
-        Debug.Log(elapsedTime * 0.1f);
         if (transform.position.x < 0)
         {
             distCovered = Vector3.Distance(transform.position, Vector3.zero);
@@ -25,6 +25,9 @@ public class ExperienceBar : MonoBehaviour {
         } else
         {
             fill.fillAmount = LevelManager.currentExperience / LevelManager.requiredExperience;
+            returnToMenu.enabled = true;
+            playAgain.enabled = true;
+            Lives.enabled = true;
         }
 	}
 }

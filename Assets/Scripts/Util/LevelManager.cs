@@ -16,6 +16,7 @@ public class LevelManager : MonoBehaviour {
     // Level and Scaling
     public static float playerLevel = 1, currentExperience = 0, requiredExperience = 0;
     public static float playerScale;
+    public static int lives = 3;
 
 
     // Track and pick shape

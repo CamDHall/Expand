@@ -6,8 +6,8 @@ public class PowerUpManager : MonoBehaviour {
 
     static public float freezeTimer;
     float freezeDrag = 5;
-    public bool freeze, damage, boost;
-    public int freezePowerups = 0, damagePowerups = 0, boostPowerups;
+    static public bool freeze, damage, boost;
+    static public int freezePowerups = 0, damagePowerups = 0, boostPowerups;
     List<GameObject> currentShapes;
 
     // Spawning info
@@ -23,12 +23,16 @@ public class PowerUpManager : MonoBehaviour {
 	void Start () {
         freezeTimer = 0;
         currentPowerups = new List<GameObject>();
+        freeze = false;
+        damage = false;
+        boost = false;
+
+        freezePowerups = 0;
+        damagePowerups = 0;
+        boostPowerups = 0;
 	}
 	
 	void Update () {
-
-        Debug.Log(freezeTimer);
-
 		if(freeze && freezeTimer > Time.timeSinceLevelLoad)
         {
             Debug.Log(freezeDrag);
@@ -80,18 +84,25 @@ public class PowerUpManager : MonoBehaviour {
         foreach(GameObject shape in Shapes.obstacleShapes)
         {
             shape.transform.DetachChildren();
-            for (int i = Shapes.obstacleShapes.Count - 1; i >= 0; i--)
-            {
-                Shapes.obstacleShapes.Remove(Shapes.obstacleShapes[i]);
-            }
             Destroy(shape);
         }
+
+        Shapes.obstacleShapes.Clear();
+
+        Debug.Log(Shapes.obstacleShapes.Count);
     }
 
     void Boost()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         player.transform.localScale += new Vector3(5, 5, 0);
+        foreach(GameObject powerup in currentPowerups)
+        {
+            if(powerup.tag == "Boost")
+            {
+                powerup.transform.position = new Vector3(powerup.transform.position.x, (powerup.transform.position.y - 1), 0);
+            }
+        }
     }
 
     public void GeneratePowerUp()

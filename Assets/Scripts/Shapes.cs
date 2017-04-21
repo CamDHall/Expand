@@ -21,7 +21,7 @@ public class Shapes : MonoBehaviour {
 	void Start () {
         shapeXLowLimit = -2.5f;
         shapeXHighLimit = 2.5f;
-        shapeYLowLimit = 3;
+        shapeYLowLimit = 4.5f;
         shapeYHighLimit = 6;
 
         obstacleShapes = new List<GameObject>();

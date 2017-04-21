@@ -4,16 +4,6 @@ using UnityEngine;
 
 public class PowerUps : MonoBehaviour {
 
-    PowerUpManager manager;
-
-	void Start () {
-        manager = GameObject.FindGameObjectWithTag("PowerUpManager").GetComponent<PowerUpManager>();
-	}
-	
-	void Update () {
-		
-	}
-
     void OnTriggerEnter2D(Collider2D coll)
     {
         if(coll.gameObject.tag == "Player")
@@ -22,28 +12,22 @@ public class PowerUps : MonoBehaviour {
             if(this.gameObject.tag == "Freeze")
             {
                 PositionPowerup();
-                manager.freezePowerups++;
-                PowerUpManager.freezeTimer = Time.timeSinceLevelLoad + 5f;
-                manager.freeze = true;
+                PowerUpManager.freezePowerups++;
             }
 
             // Destroy
             if(this.gameObject.tag == "Damage")
             {
                 PositionPowerup();
-                manager.damagePowerups++;
-                // manager.damage = true;
+                PowerUpManager.damagePowerups++;
             }
 
             // Boost
             if(this.gameObject.tag == "Boost")
             {
                 PositionPowerup();
-                manager.boostPowerups++;
-                // manager.boost = true;
+                PowerUpManager.boostPowerups++;
             }
-
-            // Destroy(this.gameObject);
         }
     }
 
@@ -53,10 +37,10 @@ public class PowerUps : MonoBehaviour {
         this.transform.localScale -= (this.transform.localScale / 3.5f);
 
         if (this.gameObject.tag == "Freeze")
-            this.transform.position = new Vector3(2.5f, 4.25f - (manager.freezePowerups * 0.9f), 0);
+            this.transform.position = new Vector3(2.5f, 4.25f - (PowerUpManager.freezePowerups * 0.9f), 0);
         else if (this.gameObject.tag == "Damage")
-            this.transform.position = new Vector3(1.5f, 4.25f - (manager.damagePowerups * 0.9f), 0);
+            this.transform.position = new Vector3(1.5f, 4.25f - (PowerUpManager.damagePowerups * 0.9f), 0);
         else if (this.gameObject.tag == "Boost")
-            this.transform.position = new Vector3(0.5f, 4.25f - (manager.boostPowerups * 0.9f), 0);
+            this.transform.position = new Vector3(0.5f, 4.25f - (PowerUpManager.boostPowerups * 0.9f), 0);
     }
 }

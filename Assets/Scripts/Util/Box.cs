@@ -16,7 +16,10 @@ public class Box : MonoBehaviour {
         {
             for(int i = Shapes.obstacleShapes.Count - 1; i >= 0; i--)
             {
-                Shapes.obstacleShapes.Remove(Shapes.obstacleShapes[i]);
+                if (Shapes.obstacleShapes[i] == coll.gameObject)
+                {
+                    Shapes.obstacleShapes.Remove(Shapes.obstacleShapes[i]);
+                }
             }
             Destroy(coll.gameObject, 0.25f);
         }

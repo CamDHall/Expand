@@ -50,6 +50,7 @@ public class Player : MonoBehaviour {
         if (transform.localScale.x < 0.5f)
         {
             death = true;
+            LevelManager.lives--;
         }
         currentScale = transform.localScale.x;
 
@@ -97,7 +98,10 @@ public class Player : MonoBehaviour {
 
             for (int i = Shapes.obstacleShapes.Count - 1; i >= 0; i--)
             {
-                Shapes.obstacleShapes.Remove(Shapes.obstacleShapes[i]);
+                if (Shapes.obstacleShapes[i] == coll.gameObject)
+                {
+                    Shapes.obstacleShapes.Remove(Shapes.obstacleShapes[i]);
+                }
             }
 
             Destroy(coll.gameObject);
