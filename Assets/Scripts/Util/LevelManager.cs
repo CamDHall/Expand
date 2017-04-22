@@ -11,7 +11,8 @@ public class LevelManager : MonoBehaviour {
     int numOfShapes = 0;
     int deathCalled = 0;
 
-    public GameObject experienceBar; // Initiate at beginging of round to fill with current experience
+    public GameObject experienceBar, mainMenuButton, playAgainButton;
+
 
     // Level and Scaling
     public static float playerLevel = 1, currentExperience = 0, requiredExperience = 0;
@@ -74,6 +75,8 @@ public class LevelManager : MonoBehaviour {
     void Experience()
     {
         experienceBar.SetActive(true);
+        playAgainButton.SetActive(true);
+        mainMenuButton.SetActive(true);
         for (int i = 0; i < spawner.filledShapeBars.Count; i++)
         {
             numOfShapes += spawner.filledShapeBars[i].transform.childCount;

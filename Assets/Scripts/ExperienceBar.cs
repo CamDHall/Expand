@@ -25,9 +25,6 @@ public class ExperienceBar : MonoBehaviour {
         } else
         {
             fill.fillAmount = LevelManager.currentExperience / LevelManager.requiredExperience;
-            returnToMenu.enabled = true;
-            playAgain.enabled = true;
-            Lives.enabled = true;
         }
 	}
 }
