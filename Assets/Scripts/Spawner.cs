@@ -66,7 +66,11 @@ public class Spawner : MonoBehaviour {
         // Powerups
         if(powerUpTimer < Time.timeSinceLevelLoad)
         {
-            fairChoice = Random.Range(0, 3);
+            if (PowerUpManager.boostPowerups < 3 && PowerUpManager.freezePowerups < 3 && PowerUpManager.damagePowerups < 3)
+                fairChoice = Random.Range(0, 3);
+            else
+                fairChoice = Random.Range(0, 2);
+
             manager.GeneratePowerUp();
             powerUpTimer = Time.timeSinceLevelLoad + Random.Range(lowPowerLimit, highPowerLimit);
         }

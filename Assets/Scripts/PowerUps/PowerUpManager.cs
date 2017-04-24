@@ -18,6 +18,8 @@ public class PowerUpManager : MonoBehaviour {
     string lastChoice;
     float gravity;
 
+    static public int numFull = 0;
+
     static public List<GameObject> currentPowerups;
 
 	void Start () {
@@ -30,6 +32,7 @@ public class PowerUpManager : MonoBehaviour {
         freezePowerups = 0;
         damagePowerups = 0;
         boostPowerups = 0;
+        numFull = 0;
 	}
 	
 	void Update () {
@@ -110,50 +113,74 @@ public class PowerUpManager : MonoBehaviour {
         newPowerUpPos = new Vector3(Random.Range(xPosLow, xPosHigh), Random.Range(yPosLow, yPosHigh), 0);
         gravity = Player.currentScale / 10;
 
-        choice = Random.Range(0, 5);
+        Debug.Log("Freeze: " + freezePowerups + " Boost: " + boostPowerups + " Damage: " + damagePowerups);
+
+        choice = Random.Range(0, 5 - numFull);
         if (lastChoice == "Feeze")
         {
-            if (choice == 0)
+            if (freezePowerups < 3)
             {
-                SpawnFreeze();
-            }
-            else if (choice <= 2)
+                if (choice == 0)
+                {
+                    SpawnFreeze();
+                }
+                else if (choice <= 2)
+                {
+                    SpawnDamage();
+                }
+                else
+                {
+                    SpawnBoost();
+                }
+            } else
             {
-                SpawnDamage();
-            }
-            else
-            {
-                SpawnBoost();
+                if (choice == 0)
+                {
+                    SpawnDamage();
+                } else
+                {
+                    SpawnBoost();
+                }
             }
         }
         else if (lastChoice == "Damage")
         {
-            if (choice == 0)
+            if (damagePowerups < 3)
             {
-                SpawnDamage();
-            }
-            else if (choice <= 2)
+                if (choice == 0)
+                {
+                    SpawnDamage();
+                }
+                else if (choice <= 2)
+                {
+                    SpawnFreeze();
+                }
+                else
+                {
+                    SpawnBoost();
+                }
+            } else
             {
-                SpawnFreeze();
-            }
-            else
-            {
-                SpawnBoost();
+                if (choice == 0)
+                {
+                    SpawnFreeze();
+                } else
+                {
+                    SpawnBoost();
+                }
             }
         }
         else if (lastChoice == "Boost")
         {
-            if (choice == 0)
+            if (boostPowerups < 3)
             {
-                SpawnBoost();
-            }
-            else if (choice <= 2)
-            {
-                SpawnDamage();
-            }
-            else
-            {
-                SpawnFreeze();
+                if (choice == 0)
+                {
+                    SpawnDamage();
+                } else
+                {
+                    SpawnFreeze();
+                }
             }
         }
         else

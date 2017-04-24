@@ -26,6 +26,10 @@ public class ExperienceBar : MonoBehaviour {
         } else
         {
             fill.fillAmount = LevelManager.currentExperience / LevelManager.requiredExperience;
+            if(LevelManager.currentExperience >= LevelManager.requiredExperience)
+            {
+                LevelManager.currentExperience -= LevelManager.requiredExperience;
+            }
         }
 	}
 }

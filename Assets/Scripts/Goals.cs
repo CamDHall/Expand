@@ -26,15 +26,23 @@ public class Goals : MonoBehaviour {
             lowScaleMutliplyer = counter * 0.01f;
             highScaleMultiplyer = counter * 0.001f;
         }
-        else if (counter <= 20)
+        else if (counter <= 50)
         {
             lowScaleMutliplyer = counter * 0.001f;
             highScaleMultiplyer = counter * 0.0001f;
         }
-        else if (counter <= 50)
+        else if (counter <= 75)
         {
             lowScaleMutliplyer = counter * 0.0001f;
             highScaleMultiplyer = counter * 0.00001f;
+        } else if( counter <= 100)
+        {
+            lowScaleMutliplyer = counter * 0.00001f;
+            highScaleMultiplyer = counter * 0.000001f;
+        } else
+        {
+            lowScaleMutliplyer = counter;
+            highScaleMultiplyer = counter;
         }
 
         lowScale += lowScaleMutliplyer;
@@ -47,7 +55,7 @@ public class Goals : MonoBehaviour {
         sphere.transform.position = goalPos;
 
         // Color
-        goalColor = Random.ColorHSV(1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f);
+        goalColor = Random.ColorHSV(0f, 1f, 1f, 1f, 1f, 1f, 1f, 1f);
         circle.GetComponent<SpriteRenderer>().material.color = goalColor;
 
         // Gravity

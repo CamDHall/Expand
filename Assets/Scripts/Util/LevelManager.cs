@@ -30,7 +30,7 @@ public class LevelManager : MonoBehaviour {
         if (currentLevel == 0)
         {
             playerScale = 0.8f;
-            requiredExperience = 100;
+            requiredExperience = 30;
         }
         else if (currentLevel <= 10)
         {
