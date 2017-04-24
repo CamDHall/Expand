@@ -14,6 +14,7 @@ public class ExperienceBar : MonoBehaviour {
     void Awake()
     {
         fill.fillAmount = LevelManager.currentExperience/LevelManager.requiredExperience;
+        Lives.text = LevelManager.lives.ToString();
     }
 	
 	void Update () {
