@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour {
 
     void Start()
     {
-        level.text = "Level: " + LevelManager.playerLevel;
+        level.text = "Level: " + LevelManager.currentLevel;
     }
 
 	public void NextLevel()

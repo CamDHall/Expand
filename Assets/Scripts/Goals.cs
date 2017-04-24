@@ -47,12 +47,10 @@ public class Goals : MonoBehaviour {
         sphere.transform.position = goalPos;
 
         // Color
-        goalColor = new Color(Random.value, Random.value, Random.value, 1f);
+        goalColor = Random.ColorHSV(1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f);
         circle.GetComponent<SpriteRenderer>().material.color = goalColor;
 
         // Gravity
         sphere.GetComponent<Rigidbody2D>().gravityScale = goalGravity / (1 + scale);
-
-        Debug.Log(scale);
     }
 }

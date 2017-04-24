@@ -6,7 +6,14 @@ public class ColorPiece : MonoBehaviour {
 
     // Bar
     public Color defaultColor;
+    Color spriteColor;
     bool containsHex = false, containsSquare = false, containsTriangle = false;
+
+    void Awake()
+    {
+        spriteColor = Random.ColorHSV(0.2f, 0.8f, 1f, 1f, 1f, 1f, 1f, 1f);
+        GetComponent<SpriteRenderer>().material.color = spriteColor;
+    }
 
 	void Update () {
         if (transform.parent != null)
@@ -30,7 +37,7 @@ public class ColorPiece : MonoBehaviour {
                 {
                     if (ShapeBar.shapeColorPieces[i].GetComponent<SpriteRenderer>().material.color == defaultColor)
                     {
-                        ShapeBar.shapeColorPieces[i].GetComponent<SpriteRenderer>().material.color = Color.white;
+                        ShapeBar.shapeColorPieces[i].GetComponent<SpriteRenderer>().material.color = spriteColor;
                         containsHex = true;
                         LevelManager.numFilled++;
                         break;
@@ -50,7 +57,7 @@ public class ColorPiece : MonoBehaviour {
                 {
                     if (ShapeBar.shapeColorPieces[i].GetComponent<SpriteRenderer>().material.color == defaultColor)
                     {
-                        ShapeBar.shapeColorPieces[i].GetComponent<SpriteRenderer>().material.color = Color.white;
+                        ShapeBar.shapeColorPieces[i].GetComponent<SpriteRenderer>().material.color = spriteColor;
                         containsSquare = true;
                         LevelManager.numFilled++;
                         break;
@@ -70,7 +77,7 @@ public class ColorPiece : MonoBehaviour {
                 {
                     if (ShapeBar.shapeColorPieces[i].GetComponent<SpriteRenderer>().material.color == defaultColor)
                     {
-                        ShapeBar.shapeColorPieces[i].GetComponent<SpriteRenderer>().material.color = Color.white;
+                        ShapeBar.shapeColorPieces[i].GetComponent<SpriteRenderer>().material.color = spriteColor;
                         LevelManager.numFilled++;
                         containsTriangle = true;
                         break;

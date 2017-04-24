@@ -101,6 +101,7 @@ public class Shapes : MonoBehaviour {
         GameObject newHex = Instantiate(hexagon, newShapePos, Quaternion.identity);
         newHex.GetComponent<Rigidbody2D>().gravityScale = gravity;
         obstacleShapes.Add(newHex);
+
         TouchManager._hexes++;
         lastChoice = "Hex";
     } 

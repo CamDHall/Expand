@@ -15,7 +15,7 @@ public class LevelManager : MonoBehaviour {
 
 
     // Level and Scaling
-    public static float playerLevel = 0, currentExperience = 0, requiredExperience = 0;
+    public static float currentLevel = 0, currentExperience = 0, requiredExperience = 0;
     public static float playerScale;
     public static int lives = 3;
 
@@ -27,32 +27,32 @@ public class LevelManager : MonoBehaviour {
 
     void Awake()
     {
-        if (playerLevel == 0)
+        if (currentLevel == 0)
         {
             playerScale = 0.8f;
             requiredExperience = 100;
         }
-        else if (playerLevel <= 10)
+        else if (currentLevel <= 10)
         {
-            playerScale = (playerLevel / 15) + 0.8f;
-            requiredExperience = (playerLevel * 10) + 100;
+            playerScale = (currentLevel / 15) + 0.8f;
+            requiredExperience = (currentLevel * 10) + 100;
         }
-        else if (playerLevel <= 20)
+        else if (currentLevel <= 20)
         {
-            playerScale = (playerLevel / 10) + 0.8f;
-            requiredExperience = (playerLevel * 30) + 100;
+            playerScale = (currentLevel / 10) + 0.8f;
+            requiredExperience = (currentLevel * 30) + 100;
         }
      
-        else if (playerLevel <= 30)
+        else if (currentLevel <= 30)
         {
-            playerScale = (playerLevel / 5) + 0.8f;
-            requiredExperience = (playerLevel * 50) + 100;
+            playerScale = (currentLevel / 5) + 0.8f;
+            requiredExperience = (currentLevel * 50) + 100;
         }
 
         else
         {
-            playerScale = (playerLevel / 4) + 0.8f;
-            requiredExperience = (playerLevel * 100) + 100;
+            playerScale = (currentLevel / 4) + 0.8f;
+            requiredExperience = (currentLevel * 100) + 100;
         }
 
         numFilled = 0;
