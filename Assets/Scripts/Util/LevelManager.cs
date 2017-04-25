@@ -15,18 +15,20 @@ public class LevelManager : MonoBehaviour {
 
 
     // Level and Scaling
-    public static float currentLevel = 0, currentExperience = 0, requiredExperience = 0;
+    public static float currentExperience = 0, requiredExperience = 0;
     public static float playerScale;
     public static int lives = 3;
-
+    public static int currentLevel;
 
     // Track and pick shape
     public static string lastShape;
 
     Spawner spawner;
-
+    bool savedOnDeath = false;
     void Awake()
     {
+        GameController.control.Load();
+
         if (currentLevel == 0)
         {
             playerScale = 0.8f;
@@ -69,6 +71,12 @@ public class LevelManager : MonoBehaviour {
         {
             Experience();
             deathCalled++;
+
+            if(!savedOnDeath)
+            {
+                GameController.control.Save();
+                savedOnDeath = true;
+            }
         }
     }
 
@@ -83,5 +91,10 @@ public class LevelManager : MonoBehaviour {
         }
 
         currentExperience += numOfShapes;
+    }
+
+    void OnApplicationQuit()
+    {
+        GameController.control.Save();
     }
 }

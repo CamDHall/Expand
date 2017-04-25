@@ -9,12 +9,13 @@ public class PowerUpManager : MonoBehaviour {
     static public bool freeze, damage, boost;
     static public int freezePowerups = 0, damagePowerups = 0, boostPowerups;
     List<GameObject> currentShapes;
+    List<string> possibleChoices;
 
     // Spawning info
     public GameObject _freezePrefab, _damagePrefab, _boostPrefab;
     Vector3 newPowerUpPos;
     float xPosLow = -2.5f, xPosHigh = 2.5f, yPosLow = 5f, yPosHigh = 6.5f;
-    int choice;
+
     string lastChoice;
     float gravity;
 
@@ -25,6 +26,14 @@ public class PowerUpManager : MonoBehaviour {
 	void Start () {
         freezeTimer = 0;
         currentPowerups = new List<GameObject>();
+
+        possibleChoices = new List<string>()
+        {
+            "Freeze",
+            "Damage",
+            "Boost"
+        };
+
         freeze = false;
         damage = false;
         boost = false;
@@ -113,91 +122,48 @@ public class PowerUpManager : MonoBehaviour {
         newPowerUpPos = new Vector3(Random.Range(xPosLow, xPosHigh), Random.Range(yPosLow, yPosHigh), 0);
         gravity = Player.currentScale / 10;
 
-        Debug.Log("Freeze: " + freezePowerups + " Boost: " + boostPowerups + " Damage: " + damagePowerups);
+        string choice = GenerateChoice();
+        if (choice == "Freeze")
+            SpawnFreeze();
+        else if (choice == "Damage")
+            SpawnDamage();
+        else
+            SpawnBoost();
+    }
 
-        choice = Random.Range(0, 5 - numFull);
-        if (lastChoice == "Feeze")
+    public string GenerateChoice()
+    {
+        bool reRolled = false;
+        string choice = "";
+
+        Debug.Log("FREEZE: " + freezePowerups + " DAMAGE: " + damagePowerups + " BOOST" + boostPowerups);
+
+        if (freezePowerups >= 3)
+            possibleChoices.Remove("Freeze");
+        if (damagePowerups >= 3)
+            possibleChoices.Remove("Damage");
+        if (boostPowerups >= 3)
+            possibleChoices.Remove("Boost");
+
+
+        int evenChoice = Random.Range(0, 3);
+
+        int unevenChoice = Random.Range(0, possibleChoices.Count);
+
+        if (lastChoice == null)
         {
-            if (freezePowerups < 3)
-            {
-                if (choice == 0)
-                {
-                    SpawnFreeze();
-                }
-                else if (choice <= 2)
-                {
-                    SpawnDamage();
-                }
-                else
-                {
-                    SpawnBoost();
-                }
-            } else
-            {
-                if (choice == 0)
-                {
-                    SpawnDamage();
-                } else
-                {
-                    SpawnBoost();
-                }
-            }
-        }
-        else if (lastChoice == "Damage")
-        {
-            if (damagePowerups < 3)
-            {
-                if (choice == 0)
-                {
-                    SpawnDamage();
-                }
-                else if (choice <= 2)
-                {
-                    SpawnFreeze();
-                }
-                else
-                {
-                    SpawnBoost();
-                }
-            } else
-            {
-                if (choice == 0)
-                {
-                    SpawnFreeze();
-                } else
-                {
-                    SpawnBoost();
-                }
-            }
-        }
-        else if (lastChoice == "Boost")
-        {
-            if (boostPowerups < 3)
-            {
-                if (choice == 0)
-                {
-                    SpawnDamage();
-                } else
-                {
-                    SpawnFreeze();
-                }
-            }
+            choice = possibleChoices[evenChoice];
+            Debug.Log(evenChoice);
         }
         else
+            if (lastChoice == possibleChoices[unevenChoice] && !reRolled)
         {
-            if (Spawner.fairChoice == 0)
-            {
-                SpawnFreeze();
-            }
-            else if (Spawner.fairChoice == 1)
-            {
-                SpawnDamage();
-            }
-            else
-            {
-                SpawnBoost();
-            }
+            unevenChoice = Random.Range(0, possibleChoices.Count - 1);
+            reRolled = true;
         }
+            choice = possibleChoices[unevenChoice];
+
+        return choice;
     }
 
     void SpawnFreeze()

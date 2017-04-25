@@ -41,8 +41,8 @@ public class Goals : MonoBehaviour {
             highScaleMultiplyer = counter * 0.000001f;
         } else
         {
-            lowScaleMutliplyer = counter;
-            highScaleMultiplyer = counter;
+            lowScaleMutliplyer = 0;
+            highScaleMultiplyer = 0;
         }
 
         lowScale += lowScaleMutliplyer;

@@ -28,14 +28,6 @@ public class PowerUps : MonoBehaviour {
                 PositionPowerup();
                 PowerUpManager.boostPowerups++;
             }
-
-            // Check if powerups are full
-            if (PowerUpManager.freezePowerups >= 3)
-                PowerUpManager.numFull++;
-            if (PowerUpManager.boostPowerups >= 3)
-                PowerUpManager.numFull++;
-            if (PowerUpManager.damagePowerups >= 3)
-                PowerUpManager.numFull++;
         }
     }
 
