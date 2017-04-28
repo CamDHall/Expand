@@ -119,7 +119,7 @@ public class PowerUpManager : MonoBehaviour {
 
     public void GeneratePowerUp()
     {
-        newPowerUpPos = new Vector3(Random.Range(xPosLow, xPosHigh), Random.Range(yPosLow, yPosHigh), 0);
+        newPowerUpPos = new Vector3(Random.Range(xPosLow, xPosHigh), Random.Range(yPosLow, yPosHigh), 1);
         gravity = Player.currentScale / 10;
 
         string choice = GenerateChoice();
@@ -136,8 +136,6 @@ public class PowerUpManager : MonoBehaviour {
         bool reRolled = false;
         string choice = "";
 
-        Debug.Log("FREEZE: " + freezePowerups + " DAMAGE: " + damagePowerups + " BOOST" + boostPowerups);
-
         if (freezePowerups >= 3)
             possibleChoices.Remove("Freeze");
         if (damagePowerups >= 3)
@@ -153,7 +151,6 @@ public class PowerUpManager : MonoBehaviour {
         if (lastChoice == null)
         {
             choice = possibleChoices[evenChoice];
-            Debug.Log(evenChoice);
         }
         else
             if (lastChoice == possibleChoices[unevenChoice] && !reRolled)
@@ -169,6 +166,8 @@ public class PowerUpManager : MonoBehaviour {
     void SpawnFreeze()
     {
         GameObject newFreeze = Instantiate(_freezePrefab);
+        newFreeze.transform.position = newPowerUpPos;
+
         newFreeze.GetComponent<Rigidbody2D>().gravityScale = Player.currentScale / 10f;
 
         currentPowerups.Add(newFreeze);

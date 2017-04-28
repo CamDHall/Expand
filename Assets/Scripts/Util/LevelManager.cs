@@ -13,7 +13,6 @@ public class LevelManager : MonoBehaviour {
 
     public GameObject experienceBar, mainMenuButton, playAgainButton;
 
-
     // Level and Scaling
     public static float currentExperience = 0, requiredExperience = 0;
     public static float playerScale;

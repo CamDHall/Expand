@@ -9,7 +9,7 @@ public class PowerUps : MonoBehaviour {
         if(coll.gameObject.tag == "Player")
         {
             // Freeze
-            if(this.gameObject.tag == "Freeze")
+            if (this.gameObject.tag == "Freeze")
             {
                 PositionPowerup();
                 PowerUpManager.freezePowerups++;
@@ -34,7 +34,7 @@ public class PowerUps : MonoBehaviour {
     void PositionPowerup()
     {
         Destroy(this.GetComponent<Rigidbody2D>());
-        this.transform.localScale -= (this.transform.localScale / 3.5f);
+        this.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
 
         if (this.gameObject.tag == "Freeze")
             this.transform.position = new Vector3(2.5f, 4.25f - (PowerUpManager.freezePowerups * 0.9f), 0);
