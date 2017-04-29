@@ -15,7 +15,7 @@ public class Player : MonoBehaviour {
     float speed = 0.1f;
     bool notTouching = true;
 
-    public static bool death;
+    public static bool death = false;
 
     // Camera Shake
     public GameObject CameraShake;
