@@ -26,8 +26,6 @@ public class LevelManager : MonoBehaviour {
     bool savedOnDeath = false;
     void Awake()
     {
-        GameController.control.Load();
-
         if (currentLevel == 0)
         {
             playerScale = 0.8f;

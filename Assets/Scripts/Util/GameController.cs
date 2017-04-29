@@ -8,7 +8,6 @@ using System.IO;
 public class GameController : MonoBehaviour {
 
     public static GameController control;
-    public int level;
 
 	void Awake () {
         if (control == null)
@@ -24,7 +23,6 @@ public class GameController : MonoBehaviour {
     void Start()
     {
         Load();
-        Debug.Log(level);
     }
 
     public void Save()
@@ -58,6 +56,6 @@ public class GameController : MonoBehaviour {
 [Serializable]
 class PlayerData
 {
-    public int playerLevel = 50;
+    public int playerLevel;
     public float currentExperience;
 }
