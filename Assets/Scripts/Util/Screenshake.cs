@@ -2,43 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Screenshake : MonoBehaviour {
-    public bool Shaking;
-    private float ShakeDecay;
-    private float ShakeIntensity;
-    private Vector3 OriginalPos;
-    private Quaternion OriginalRot;
+// Put on camera
+[RequireComponent(typeof(Camera))]
+public class Screenshake : MonoBehaviour
+{
 
-    void Start () {
-        Shaking = false;
-	}
-	
-	void Update () {
-        if (ShakeIntensity > 0)
-        {
-            transform.position = OriginalPos + Random.insideUnitSphere * ShakeIntensity;
-            transform.rotation = new Quaternion(OriginalRot.x + Random.Range(-ShakeIntensity, ShakeIntensity) * .2f,
-                                      OriginalRot.y + Random.Range(-ShakeIntensity, ShakeIntensity) * .2f,
-                                      OriginalRot.z + Random.Range(-ShakeIntensity, ShakeIntensity) * .2f,
-                                      OriginalRot.w + Random.Range(-ShakeIntensity, ShakeIntensity) * .2f);
+    public float shakeStrength;
+    Vector3 startPos;
+    public static bool shaking;
 
-            ShakeIntensity -= ShakeDecay;
-        }
-        else if (Shaking)
-        {
-            Shaking = false;
-            transform.position = new Vector3(0, 0, -10);
-            transform.rotation = new Quaternion(0, 0, 0, 0);
-        }
+    void Start()
+    {
+        startPos = transform.position;
+        shaking = false;
     }
 
-    public void DoShake()
+    void Update()
     {
-        OriginalPos = transform.position;
-        OriginalRot = transform.rotation;
+        transform.position = Vector3.Lerp(transform.position, startPos + Random.insideUnitSphere * shakeStrength, Time.deltaTime * 5f);
 
-        ShakeIntensity = 0.2f;
-        ShakeDecay = 0.009f;
-        Shaking = true;
+        if (shaking)
+        {
+            shakeStrength = 3f;
+            shaking = false;
+        }
+
+        shakeStrength = Mathf.Lerp(shakeStrength, 0f, Time.deltaTime * 4f);
     }
 }

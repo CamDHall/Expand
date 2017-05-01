@@ -60,6 +60,5 @@ public class Goals : MonoBehaviour {
 
         // Gravity
         sphere.GetComponent<Rigidbody2D>().gravityScale = scale / 4.5f;
-        Debug.Log("Gravity: " + sphere.GetComponent<Rigidbody2D>().gravityScale + " Scale: " + scale);
     }
 }
