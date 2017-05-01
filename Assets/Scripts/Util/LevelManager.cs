@@ -17,7 +17,7 @@ public class LevelManager : MonoBehaviour {
     public static float currentExperience = 0, requiredExperience = 0;
     public static float playerScale;
     public static int lives = 3;
-    public static int currentLevel = 50;
+    public static int currentLevel = 0;
 
     // Track and pick shape
     public static string lastShape;

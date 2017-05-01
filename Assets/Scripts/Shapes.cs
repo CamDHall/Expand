@@ -31,7 +31,7 @@ public class Shapes : MonoBehaviour {
     {
         newShapePos = new Vector3(Random.Range(shapeXLowLimit, shapeXHighLimit), Random.Range(shapeYLowLimit, shapeYHighLimit), 0);
 
-        gravity = Player.currentScale / 10;
+        gravity = Player.currentScale / 9;
 
         choice = Random.Range(0, 5);
         if (lastChoice == "Hex")

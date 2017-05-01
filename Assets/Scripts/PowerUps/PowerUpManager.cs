@@ -120,7 +120,7 @@ public class PowerUpManager : MonoBehaviour {
     public void GeneratePowerUp()
     {
         newPowerUpPos = new Vector3(Random.Range(xPosLow, xPosHigh), Random.Range(yPosLow, yPosHigh), 1);
-        gravity = Player.currentScale / 10;
+        gravity = Player.currentScale / 10.5f;
 
         string choice = GenerateChoice();
         if (choice == "Freeze")

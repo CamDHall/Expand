@@ -13,7 +13,7 @@ public class Goals : MonoBehaviour {
     float lowScale = 0.8f, highScale = 1.0f, lowScaleMutliplyer = 0, highScaleMultiplyer = 0, counter = 0;
 
     // Gravity
-    float gravity, goalGravity = 1.01f;
+    float goalGravity = 0.25f;
 
     public void Goal()
     {
@@ -59,6 +59,7 @@ public class Goals : MonoBehaviour {
         circle.GetComponent<SpriteRenderer>().material.color = goalColor;
 
         // Gravity
-        sphere.GetComponent<Rigidbody2D>().gravityScale = goalGravity / (1 + scale);
+        sphere.GetComponent<Rigidbody2D>().gravityScale = scale / 4.5f;
+        Debug.Log("Gravity: " + sphere.GetComponent<Rigidbody2D>().gravityScale + " Scale: " + scale);
     }
 }
