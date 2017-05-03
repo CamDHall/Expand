@@ -8,6 +8,7 @@ public class Player : MonoBehaviour {
     float addMass;
     static public float currentScale;
     public static Vector3 Pos;
+    public Animator experienceBar;
 
     // Scaling
     float shrink;
@@ -47,6 +48,7 @@ public class Player : MonoBehaviour {
         if (transform.localScale.x < 0.5f)
         {
             death = true;
+            experienceBar.SetBool("isDead", true);
             LevelManager.lives--;
         }
         currentScale = transform.localScale.x;
