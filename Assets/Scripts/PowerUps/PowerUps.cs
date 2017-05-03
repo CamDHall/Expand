@@ -13,6 +13,7 @@ public class PowerUps : MonoBehaviour {
             {
                 PositionPowerup();
                 PowerUpManager.freezePowerups++;
+                this.gameObject.tag = "CanFreeze";
             }
 
             // Destroy
@@ -20,6 +21,7 @@ public class PowerUps : MonoBehaviour {
             {
                 PositionPowerup();
                 PowerUpManager.damagePowerups++;
+                this.gameObject.tag = "CanDamage";
             }
 
             // Boost
@@ -27,6 +29,7 @@ public class PowerUps : MonoBehaviour {
             {
                 PositionPowerup();
                 PowerUpManager.boostPowerups++;
+                this.gameObject.tag = "CanBoost";
             }
         }
     }

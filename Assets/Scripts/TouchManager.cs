@@ -28,6 +28,40 @@ public class TouchManager : MonoBehaviour
     {
         //We check if we have more than one touch happening.
         //We also check if the first touches phase is Ended (that the finger was lifted)
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.zero);
+
+            if (hit.collider != null)
+            {
+                GameObject touchedObject = hit.transform.gameObject;
+
+                if (hit.transform.tag == "CanBoost")
+                {
+                    PowerUpManager.boost = true;
+                    Destroy(touchedObject);
+                    PowerUpManager.currentPowerups.Remove(touchedObject);
+                    PowerUpManager.boostPowerups -= 1;
+                }
+                else if (hit.transform.tag == "CanDamage")
+                {
+                    PowerUpManager.damage = true;
+                    Destroy(touchedObject);
+                    PowerUpManager.currentPowerups.Remove(touchedObject);
+                    PowerUpManager.damagePowerups -= 1;
+                }
+                else if (hit.transform.tag == "CanFreeze")
+                {
+                    PowerUpManager.freeze = true;
+                    PowerUpManager.freezeTimer = Time.timeSinceLevelLoad + 5f;
+                    Destroy(touchedObject);
+                    PowerUpManager.currentPowerups.Remove(touchedObject);
+                    PowerUpManager.freezePowerups -= 1;
+                }
+            }
+        }
+
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == touchPhase)
         {
             //We transform the touch position into word space from screen space and store it.
@@ -42,14 +76,14 @@ public class TouchManager : MonoBehaviour
             {
                 //We should have hit something with a 2D Physics collider!
                 GameObject touchedObject = hitInformation.transform.gameObject;
-                if (touchedObject.tag == "Boost")
+                if (touchedObject.tag == "CanBoost")
                 {
                     PowerUpManager.boost = true;
                     Destroy(touchedObject);
                     PowerUpManager.currentPowerups.Remove(touchedObject);
                     PowerUpManager.boostPowerups -= 1;
                 }
-                else if (touchedObject.tag == "Freeze")
+                else if (touchedObject.tag == "CanFreeze")
                 {
                     PowerUpManager.freeze = true;
                     PowerUpManager.freezeTimer = Time.timeSinceLevelLoad + 5f;
@@ -57,7 +91,7 @@ public class TouchManager : MonoBehaviour
                     PowerUpManager.currentPowerups.Remove(touchedObject);
                     PowerUpManager.freezePowerups -= 1;
                 }
-                else if (touchedObject.tag == "Damage")
+                else if (touchedObject.tag == "CanDamage")
                 {
                     PowerUpManager.damage = true;
                     Destroy(touchedObject);

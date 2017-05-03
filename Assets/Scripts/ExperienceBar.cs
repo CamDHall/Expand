@@ -21,7 +21,7 @@ public class ExperienceBar : MonoBehaviour {
         if (transform.position.x < 0)
         {
             distCovered = Vector3.Distance(transform.position, Vector3.zero);
-            transform.position = Vector3.Lerp(transform.position, Vector3.zero, (elapsedTime) * 0.1f);
+            transform.position = Vector3.Lerp(transform.position, new Vector3(0, transform.position.y, transform.position.z), (elapsedTime) * 0.1f);
             elapsedTime += Time.deltaTime;
         } else
         {
