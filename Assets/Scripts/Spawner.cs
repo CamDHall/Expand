@@ -80,7 +80,7 @@ public class Spawner : MonoBehaviour {
         currentShapeBars = new List<GameObject> (GameObject.FindGameObjectsWithTag("ShapeBar"));
         for (int i = 0; i < currentShapeBars.Count; i++)
         {
-            currentShapeBars[i].transform.position = new Vector3(transform.position.x - (i + 1), currentShapeBars[i].transform.position.y, transform.position.z);
+            currentShapeBars[i].transform.position = new Vector3(currentShapeBars[i].transform.position.x - 3, currentShapeBars[i].transform.position.y, transform.position.z);
             filledShapeBars.Add(currentShapeBars[i]);
         }
         Instantiate(shapeBar);

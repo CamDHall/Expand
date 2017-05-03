@@ -47,7 +47,6 @@ public class PowerUpManager : MonoBehaviour {
 	void Update () {
 		if(freeze && freezeTimer > Time.timeSinceLevelLoad)
         {
-            Debug.Log(freezeDrag);
             if (freezeDrag > 0)
             {
                 freezeDrag -= Time.deltaTime;
@@ -100,14 +99,12 @@ public class PowerUpManager : MonoBehaviour {
         }
 
         Shapes.obstacleShapes.Clear();
-
-        Debug.Log(Shapes.obstacleShapes.Count);
     }
 
     void Boost()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        player.transform.localScale += new Vector3(5, 5, 0);
+        player.transform.localScale += new Vector3(2, 2, 0);
         foreach(GameObject powerup in currentPowerups)
         {
             if(powerup.tag == "Boost")
