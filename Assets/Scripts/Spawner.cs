@@ -19,7 +19,7 @@ public class Spawner : MonoBehaviour {
     // Powerups
     public PowerUpManager manager;
     public GameObject freezePower, explodePower, expandPower;
-    float powerUpTimer, lowPowerLimit = 12f, highPowerLimit = 16f;
+    float powerUpTimer, lowPowerLimit = 15f, highPowerLimit = 20f;
     int powerUpCounter = 0;
 
     float gravityModifier = 1.001f;
@@ -28,8 +28,8 @@ public class Spawner : MonoBehaviour {
     // Misc Timer
     float shapeTimer, goalTimer;
     public float timerProgress = 0.99f, goalTimerProgress = 0.9999f;
-    float shapeTimerLow = 6, shapeTimerHigh = 9, shapeMultiplierTime = 1f; // Shape Timer
-    float goalTimerLow = 0.4f, goalTimerHigh = 0.7f, goalMultiplierTime; // Goal Timer
+    float shapeTimerLow = 5f, shapeTimerHigh = 8f, shapeMultiplierTime = 1f; // Shape Timer
+    float goalTimerLow = 0.6f, goalTimerHigh = 0.9f, goalMultiplierTime; // Goal Timer
 
     void Start () {
         shapeTimer = Time.timeSinceLevelLoad + 1f;
