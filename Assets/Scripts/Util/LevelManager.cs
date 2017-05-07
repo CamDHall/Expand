@@ -9,7 +9,6 @@ public class LevelManager : MonoBehaviour {
     public static Color levelColor;
     public static int numFilled;
     int numOfShapes = 0;
-    int deathCalled = 0;
 
     public GameObject experienceBar, mainMenuButton, playAgainButton;
 
@@ -62,10 +61,10 @@ public class LevelManager : MonoBehaviour {
 
     void Update()
     {
-        if (Player.death && deathCalled == 0)
+        if (Player.death)
         {
             Experience();
-            deathCalled++;
+            spawner.enabled = false;
 
             if(!savedOnDeath)
             {

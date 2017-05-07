@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
     static public float currentScale;
     public static Vector3 Pos;
     public Animator experienceBar;
+    Color playerColor;
 
     // Scaling
     float shrink;
@@ -26,6 +27,16 @@ public class Player : MonoBehaviour {
 
     void Update()
     {
+        if(transform.localScale.x <= 1f)
+        {
+            playerColor = new Color(1, 0, 0);
+        } else
+        {
+            playerColor = Color.white;
+        }
+
+        GetComponent<SpriteRenderer>().color = playerColor;
+
         // TEST MOUSE
         if (Input.GetMouseButton(0))
         {
