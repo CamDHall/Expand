@@ -15,8 +15,8 @@ public class LevelManager : MonoBehaviour {
     // Level and Scaling
     public static float currentExperience, requiredExperience;
     public static float playerScale;
-    public static int lives = 3;
-    public static int currentLevel = 0;
+
+    public static int currentLevel;
 
     // Track and pick shape
     public static string lastShape;
@@ -42,7 +42,6 @@ public class LevelManager : MonoBehaviour {
     {
 
         spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>();
-        currentExperience = 35;
 
         if (currentLevel == 0)
             requiredExperience = 30;

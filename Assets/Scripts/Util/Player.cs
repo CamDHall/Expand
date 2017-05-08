@@ -60,7 +60,6 @@ public class Player : MonoBehaviour {
         {
             death = true;
             experienceBar.SetBool("isDead", true);
-            LevelManager.lives--;
         }
         currentScale = transform.localScale.x;
 

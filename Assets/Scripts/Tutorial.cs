@@ -11,6 +11,7 @@ public class Tutorial : MonoBehaviour {
     string phase;
     float Timer;
     public GameObject staticObstacle, obstacle, goal, bar;
+    GameObject obstacleVar;
 
 	void Start () {
         phase = "Movement";
@@ -49,7 +50,7 @@ public class Tutorial : MonoBehaviour {
         {
             shrink.GetComponent<Text>().enabled = false;
             objective.GetComponent<Text>().enabled = true;
-            Instantiate(staticObstacle);
+            obstacleVar = Instantiate(staticObstacle);
             Instantiate(bar);
 
             Timer = Time.timeSinceLevelLoad + 3f;
@@ -66,7 +67,7 @@ public class Tutorial : MonoBehaviour {
 
         if(phase == "Demo" && Time.timeSinceLevelLoad > Timer)
         {
-            Destroy(staticObstacle);
+            Destroy(obstacleVar);
             caution.GetComponent<Text>().enabled = false;
             Obstacles();
             phase = "Powerups";
