@@ -6,11 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class Tutorial : MonoBehaviour {
 
-    public Text movement, expansion, shrink, objective, caution;
+    public Text movement, expansion, shrink, objective, caution, powerUpActive;
     public GameObject icon;
     string phase;
     float Timer;
-    public GameObject staticObstacle, obstacle, goal, bar;
+    public GameObject staticObstacle, obstacle, goal, bar, grow;
+
     GameObject obstacleVar;
 
 	void Start () {
@@ -19,6 +20,7 @@ public class Tutorial : MonoBehaviour {
         shrink.GetComponent<Text>().enabled = false;
         objective.GetComponent<Text>().enabled = false;
         caution.GetComponent<Text>().enabled = false;
+        powerUpActive.GetComponent<Text>().enabled = false;
 	}
 	
 	void Update () {
@@ -77,7 +79,20 @@ public class Tutorial : MonoBehaviour {
         // Finish Later
         if(phase == "Powerups" && Time.timeSinceLevelLoad > Timer)
         {
-            SceneManager.LoadScene("MainScreen");
+            var growPower = Instantiate(grow);
+            growPower.GetComponent<Rigidbody2D>().gravityScale = 0.1f;
+
+            powerUpActive.GetComponent<Text>().enabled = true;
+            icon.GetComponent<SpriteRenderer>().enabled = true;
+            icon.transform.position = new Vector3(0.5f, 3, 0);
+
+            Timer = Time.timeSinceLevelLoad + 5f;
+            phase = "PowerUpDescription";
+        }
+
+        if(phase == "PowerUpDescription" && Time.timeSinceLevelLoad > Timer)
+        {
+
         }
 
         foreach (Touch touch in Input.touches)
