@@ -73,7 +73,7 @@ public class Tutorial : MonoBehaviour {
             caution.GetComponent<Text>().enabled = false;
             Obstacles();
             phase = "Powerups";
-            Timer = Time.timeSinceLevelLoad + 5f;
+            Timer = Time.timeSinceLevelLoad + 3f;
         }
 
         // Finish Later
@@ -83,16 +83,32 @@ public class Tutorial : MonoBehaviour {
             growPower.GetComponent<Rigidbody2D>().gravityScale = 0.1f;
 
             powerUpActive.GetComponent<Text>().enabled = true;
+            Timer = Time.timeSinceLevelLoad + 3f;
+
+            phase = "Transition";
+        }
+
+        if(phase == "Transition" && Time.timeSinceLevelLoad > Timer)
+        {
             icon.GetComponent<SpriteRenderer>().enabled = true;
             icon.transform.position = new Vector3(0.5f, 3, 0);
 
-            Timer = Time.timeSinceLevelLoad + 5f;
-            phase = "PowerUpDescription";
+            phase = "PowerUpIdle";
         }
 
-        if(phase == "PowerUpDescription" && Time.timeSinceLevelLoad > Timer)
+        if(phase == "PowerUpIdle" && PowerUpManager.boostedTouched)
         {
+            powerUpActive.GetComponent<Text>().enabled = false;
+            icon.GetComponent<SpriteRenderer>().enabled = false;
 
+
+            phase = "Finished";
+            Timer = Time.timeSinceLevelLoad + 5f;
+        }
+
+        if(phase == "Finished" && Time.timeSinceLevelLoad > Timer)
+        {
+            SceneManager.LoadScene("MainScreen");
         }
 
         foreach (Touch touch in Input.touches)

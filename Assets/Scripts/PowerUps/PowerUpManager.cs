@@ -11,6 +11,9 @@ public class PowerUpManager : MonoBehaviour {
     List<GameObject> currentShapes;
     List<string> possibleChoices;
 
+    // Tutorial
+    public static bool boostedTouched;
+
     // Spawning info
     public GameObject _freezePrefab, _damagePrefab, _boostPrefab;
     Vector3 newPowerUpPos;
@@ -25,6 +28,7 @@ public class PowerUpManager : MonoBehaviour {
 
 	void Start () {
         freezeTimer = 0;
+        boostedTouched = false;
         currentPowerups = new List<GameObject>();
 
         possibleChoices = new List<string>()
@@ -105,6 +109,9 @@ public class PowerUpManager : MonoBehaviour {
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         player.transform.localScale += new Vector3(2, 2, 0);
+
+        boostedTouched = true;
+
         foreach(GameObject powerup in currentPowerups)
         {
             if(powerup.tag == "Boost")
