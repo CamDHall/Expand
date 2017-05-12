@@ -58,8 +58,14 @@ public class Player : MonoBehaviour {
 
         if (transform.localScale.x < 0.5f)
         {
-            death = true;
-            experienceBar.SetBool("isDead", true);
+            if (SceneManager.GetActiveScene().name != "Tutorial")
+            {
+                death = true;
+                experienceBar.SetBool("isDead", true);
+            } else
+            {
+                death = true;
+            }
         }
         currentScale = transform.localScale.x;
 

@@ -7,10 +7,12 @@ using UnityEngine.SceneManagement;
 public class Tutorial : MonoBehaviour {
 
     public Text movement, expansion, shrink, objective, caution, powerUpActive;
-    public GameObject icon;
-    string phase;
+    public GameObject icon, spawner;
+    string phase, resume_phase;
     float Timer;
-    public GameObject staticObstacle, obstacle, goal, bar, grow;
+
+    // Death
+    public Animator button;
 
     GameObject obstacleVar;
 
@@ -21,9 +23,16 @@ public class Tutorial : MonoBehaviour {
         objective.GetComponent<Text>().enabled = false;
         caution.GetComponent<Text>().enabled = false;
         powerUpActive.GetComponent<Text>().enabled = false;
+
 	}
 	
 	void Update () {
+
+        if(Player.death)
+        {
+            button.SetBool("Died", true);
+            phase = "Idle";
+        }
 
         if(Input.GetMouseButtonDown(0) && phase == "Movement")
         {
@@ -46,14 +55,13 @@ public class Tutorial : MonoBehaviour {
             shrink.GetComponent<Text>().enabled = true;
             Timer = Time.timeSinceLevelLoad + 3f;
             phase = "Obstacles";
+            spawner.GetComponent<Spawner>().enabled = true;
         }
 
         if(phase == "Obstacles" && Time.timeSinceLevelLoad > Timer)
         {
             shrink.GetComponent<Text>().enabled = false;
             objective.GetComponent<Text>().enabled = true;
-            obstacleVar = Instantiate(staticObstacle);
-            Instantiate(bar);
 
             Timer = Time.timeSinceLevelLoad + 3f;
             phase = "Caution";
@@ -71,7 +79,7 @@ public class Tutorial : MonoBehaviour {
         {
             Destroy(obstacleVar);
             caution.GetComponent<Text>().enabled = false;
-            Obstacles();
+
             phase = "Powerups";
             Timer = Time.timeSinceLevelLoad + 3f;
         }
@@ -79,9 +87,6 @@ public class Tutorial : MonoBehaviour {
         // Finish Later
         if(phase == "Powerups" && Time.timeSinceLevelLoad > Timer)
         {
-            var growPower = Instantiate(grow);
-            growPower.GetComponent<Rigidbody2D>().gravityScale = 0.1f;
-
             powerUpActive.GetComponent<Text>().enabled = true;
             Timer = Time.timeSinceLevelLoad + 4.5f;
 
@@ -122,8 +127,8 @@ public class Tutorial : MonoBehaviour {
         }
     }
 
-    void Obstacles()
+    public void ContinueButton()
     {
-        Instantiate(obstacle);
+        SceneManager.LoadScene("Tutorial");
     }
 }
