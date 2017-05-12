@@ -83,7 +83,7 @@ public class Tutorial : MonoBehaviour {
             growPower.GetComponent<Rigidbody2D>().gravityScale = 0.1f;
 
             powerUpActive.GetComponent<Text>().enabled = true;
-            Timer = Time.timeSinceLevelLoad + 3f;
+            Timer = Time.timeSinceLevelLoad + 4.5f;
 
             phase = "Transition";
         }
