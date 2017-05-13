@@ -6,129 +6,77 @@ using UnityEngine.SceneManagement;
 
 public class Tutorial : MonoBehaviour {
 
-    public Text movement, expansion, shrink, objective, caution, powerUpActive;
-    public GameObject icon, spawner;
-    string phase, resume_phase;
-    float Timer;
+    public Animator nextButton;
 
-    // Death
-    public Animator button;
+    Dictionary<string, string> text_options;
+    public GameObject player, exampleBar, square, squareWall, powerup, hexLast;
+    string currentPhase;
+    public Text text, start;
 
-    GameObject obstacleVar;
-
-	void Start () {
-        phase = "Movement";
-        expansion.GetComponent<Text>().enabled = false;
-        shrink.GetComponent<Text>().enabled = false;
-        objective.GetComponent<Text>().enabled = false;
-        caution.GetComponent<Text>().enabled = false;
-        powerUpActive.GetComponent<Text>().enabled = false;
-
-	}
-	
-	void Update () {
-
-        if(Player.death)
-        {
-            button.SetBool("Died", true);
-            phase = "Idle";
-        }
-
-        if(Input.GetMouseButtonDown(0) && phase == "Movement")
-        {
-            movement.GetComponent<Text>().enabled = false;
-            Timer = Time.timeSinceLevelLoad + 1f;
-            phase = "Expansion";
-        }
-
-        if(phase == "Expansion" && Time.timeSinceLevelLoad > Timer)
-        {
-            phase = "Shrinking";
-            expansion.GetComponent<Text>().enabled = true;
-            Timer = Time.timeSinceLevelLoad + 5f;
-        }
-
-        if(phase == "Shrinking" && Time.timeSinceLevelLoad > Timer)
-        {
-            expansion.GetComponent<Text>().enabled = false;
-            icon.GetComponent<SpriteRenderer>().enabled = false;
-            shrink.GetComponent<Text>().enabled = true;
-            Timer = Time.timeSinceLevelLoad + 3f;
-            phase = "Obstacles";
-            spawner.GetComponent<Spawner>().enabled = true;
-        }
-
-        if(phase == "Obstacles" && Time.timeSinceLevelLoad > Timer)
-        {
-            shrink.GetComponent<Text>().enabled = false;
-            objective.GetComponent<Text>().enabled = true;
-
-            Timer = Time.timeSinceLevelLoad + 3f;
-            phase = "Caution";
-        }
-
-        if(phase == "Caution" && Time.timeSinceLevelLoad > Timer)
-        {
-            objective.GetComponent<Text>().enabled = false;
-            caution.GetComponent<Text>().enabled = true;
-            phase = "Demo";
-            Timer = Time.timeSinceLevelLoad + 5f;
-        }
-
-        if(phase == "Demo" && Time.timeSinceLevelLoad > Timer)
-        {
-            Destroy(obstacleVar);
-            caution.GetComponent<Text>().enabled = false;
-
-            phase = "Powerups";
-            Timer = Time.timeSinceLevelLoad + 3f;
-        }
-
-        // Finish Later
-        if(phase == "Powerups" && Time.timeSinceLevelLoad > Timer)
-        {
-            powerUpActive.GetComponent<Text>().enabled = true;
-            Timer = Time.timeSinceLevelLoad + 4.5f;
-
-            phase = "Transition";
-        }
-
-        if(phase == "Transition" && Time.timeSinceLevelLoad > Timer)
-        {
-            icon.GetComponent<SpriteRenderer>().enabled = true;
-            icon.transform.position = new Vector3(0.5f, 3, 0);
-
-            phase = "PowerUpIdle";
-        }
-
-        if(phase == "PowerUpIdle" && PowerUpManager.boostedTouched)
-        {
-            powerUpActive.GetComponent<Text>().enabled = false;
-            icon.GetComponent<SpriteRenderer>().enabled = false;
-
-
-            phase = "Finished";
-            Timer = Time.timeSinceLevelLoad + 5f;
-        }
-
-        if(phase == "Finished" && Time.timeSinceLevelLoad > Timer)
-        {
-            SceneManager.LoadScene("MainScreen");
-        }
-
-        foreach (Touch touch in Input.touches)
-        {
-            if (touch.phase == TouchPhase.Moved && phase == "Movement")
-            {
-                movement.GetComponent<Text>().enabled = false;
-                Timer = Time.timeSinceLevelLoad + 1f;
-                phase = "Expansion";
-            }
-        }
-    }
-
-    public void ContinueButton()
+    void Start()
     {
-        SceneManager.LoadScene("Tutorial");
+        text = text.GetComponent<Text>();
+        currentPhase = "Movement";
+        text_options = new Dictionary<string, string>()
+        {
+            {"Movement", "TOUCH TO MOVE HORIZTONALLY" },
+            {"Growth", "YOU'LL SHRINK WHEN YOU'RE NOT TOUCHING" },
+            {"Death", "IF YOU SHRINK TOO MUCH, YOU'll DIE." },
+            {"Objectives", "COLLECT THE FALLING SHAPES TO FILL THE BAR AND LEVEL UP!" },
+            {"Caution", "HITTING RED WALLS WILL SHRINK YOU!" },
+            {"Collect", "COLLECT A POWERUP TO STORE IT" },
+            { "Powerup", "TAP A STORED POWERUP TO ACTIVATE IT" },
+            {"Last", "ONLY COLLECT SHAPES YOU NEED!" }
+        };
     }
+
+    void Update()
+    {
+        text.text = text_options[currentPhase];
+        if (currentPhase == "Death" || currentPhase == "Caution" || currentPhase == "Last")
+            text.color = Color.red;
+        else
+            text.color = Color.white;
+    }
+
+    public void NextButton()
+    {
+        switch (currentPhase)
+        {
+            case "Movement":
+                currentPhase = "Growth";
+                break;
+            case "Growth":
+                player.transform.localScale = Vector3.Lerp(player.transform.localScale, new Vector3(0.3f, 0.3f, 0.3f), Time.deltaTime);
+                currentPhase = "Death";
+                break;
+            case "Death":
+                player.transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
+                exampleBar.SetActive(true);
+                square.SetActive(true);
+
+                currentPhase = "Objectives";
+                break;
+            case "Objectives":
+                squareWall.SetActive(true);
+                currentPhase = "Caution";
+                break;
+            case "Caution":
+                currentPhase = "Collect";
+                powerup.SetActive(true);
+                break;
+            case "Collect":
+                currentPhase = "Powerup";
+                break;
+            case "Powerup":
+                currentPhase = "Last";
+                start.text = "START";
+                hexLast.SetActive(true);
+                break;
+            case "Last":
+                SceneManager.LoadScene("MainScreen");
+                break;
+        }
+    }
+
 }

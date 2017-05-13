@@ -20,9 +20,16 @@ public class Player : MonoBehaviour {
     public static bool death = false;
 
     void Start() {
-        newScale = new Vector3(LevelManager.playerScale, LevelManager.playerScale, 0);
-        transform.localScale = newScale;
-        death = false;
+        if (SceneManager.GetActiveScene().name == "Tutorial")
+        {
+            transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
+        }
+        else
+        {
+            newScale = new Vector3(LevelManager.playerScale, LevelManager.playerScale, 0);
+            transform.localScale = newScale;
+            death = false;
+        }
     }
 
     void Update()
