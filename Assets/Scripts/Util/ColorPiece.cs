@@ -95,7 +95,7 @@ public class ColorPiece : MonoBehaviour {
     {
         foreach(GameObject shape in ShapeBar.shapeColorPieces)
         {
-            shape.GetComponent<SpriteRenderer>().material.color = defaultColor;
+            shape.GetComponent<SpriteRenderer>().color = defaultColor;
             containsHex = false;
             containsSquare = false;
             containsTriangle = false;

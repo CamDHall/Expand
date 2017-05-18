@@ -27,7 +27,7 @@ public class ShapeBar : MonoBehaviour {
 
         for(int i = 0; i < barHeight; i++)
         {
-            Pos = new Vector2(-2.5f, -4.5f + (i * 0.75f));
+            Pos = new Vector2(-2.0f, -4.5f + (i * 0.75f));
             int choice = Random.Range(0, 3);
 
             if (choice == 0)
