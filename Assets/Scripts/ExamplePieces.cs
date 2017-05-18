@@ -28,12 +28,12 @@ public class ExamplePieces : MonoBehaviour {
         {
             if(gameObject.tag == "hexLast")
             {
-                squareUI.GetComponent<SpriteRenderer>().material.color = defaultColor;
-                hexUI.GetComponent<SpriteRenderer>().material.color = defaultColor;
+                squareUI.GetComponent<SpriteRenderer>().color = defaultColor;
+                hexUI.GetComponent<SpriteRenderer>().color = defaultColor;
             } else if (gameObject.tag == "squareColorPiece")
-                squareUI.GetComponent<SpriteRenderer>().material.color = GetComponent<SpriteRenderer>().color;
+                squareUI.GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color;
             else
-                hexUI.GetComponent<SpriteRenderer>().material.color = GetComponent<SpriteRenderer>().color;
+                hexUI.GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color;
 
             Destroy(this.gameObject);
         }

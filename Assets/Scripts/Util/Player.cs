@@ -106,8 +106,6 @@ public class Player : MonoBehaviour {
     {
         if (coll.gameObject.tag == "Goal")
         {
-            Scoring.Score += (coll.transform.localScale.x * 50f);
-
             var newScale = new Vector3(transform.localScale.x + coll.gameObject.transform.localScale.x, transform.localScale.x + coll.gameObject.transform.localScale.y, 0);
             transform.localScale = Vector3.Lerp(transform.localScale, newScale, 1f * Time.deltaTime);
             Destroy(coll.gameObject);
