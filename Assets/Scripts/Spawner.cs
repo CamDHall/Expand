@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour {
 
-    // Wall
-    // public Walls walls;
-
     public GameObject shapeBar;
     List<GameObject> currentShapeBars;
     public List<GameObject> filledShapeBars;
@@ -37,7 +34,8 @@ public class Spawner : MonoBehaviour {
 
         fairChoice = 0;
 
-        Instantiate(shapeBar);
+        if(shapeBar != null)
+            Instantiate(shapeBar);
     }
 
     void Update() {

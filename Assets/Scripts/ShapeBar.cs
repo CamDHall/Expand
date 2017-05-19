@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class ShapeBar : MonoBehaviour {
 
+    // Sizing
+    Vector3 screenDimensions;
+    float screenWidth;
+
     public GameObject greyHex, greySquare, greyTriangle;
     int numberOfBars = 0; 
     public static int barHeight;
@@ -11,10 +15,19 @@ public class ShapeBar : MonoBehaviour {
     public static List<GameObject> shapeColorPieces;
     public static bool spawnNewBar = false;
 
-	void Start () {
+    void Awake()
+    {
+        screenDimensions = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
+
+        screenWidth = screenDimensions.x;
+    }
+
+    void Start () {
         numberOfBars++;
         shapeColorPieces = new List<GameObject>();
         spawnNewBar = false;
+
+        Debug.Log(screenDimensions);
 
         // Bar height
         if(numberOfBars <= 3 )
@@ -27,7 +40,7 @@ public class ShapeBar : MonoBehaviour {
 
         for(int i = 0; i < barHeight; i++)
         {
-            Pos = new Vector2(-2.0f, -4.5f + (i * 0.75f));
+            Pos = new Vector2( -1 - screenWidth / 2, -4.5f + (i * 0.75f));
             int choice = Random.Range(0, 3);
 
             if (choice == 0)
