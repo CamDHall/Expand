@@ -40,7 +40,7 @@ public class ShapeBar : MonoBehaviour {
 
         for(int i = 0; i < barHeight; i++)
         {
-            Pos = new Vector2( -1 - screenWidth / 2, -4.5f + (i * 0.75f));
+            Pos = new Vector2( -0.75f - screenWidth / 2, -4.5f + (i * 0.75f));
             int choice = Random.Range(0, 3);
 
             if (choice == 0)

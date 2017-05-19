@@ -12,7 +12,7 @@ public class ColorPiece : MonoBehaviour {
     void Awake()
     {
         spriteColor = Random.ColorHSV(0.2f, 0.8f, 1f, 1f, 1f, 1f, 1f, 1f);
-        GetComponent<SpriteRenderer>().material.color = spriteColor;
+        GetComponent<SpriteRenderer>().color = spriteColor;
     }
 
 	void Update () {
@@ -35,9 +35,9 @@ public class ColorPiece : MonoBehaviour {
             {
                 if (ShapeBar.shapeColorPieces[i].gameObject.tag == "barHex")
                 {
-                    if (ShapeBar.shapeColorPieces[i].GetComponent<SpriteRenderer>().material.color == defaultColor)
+                    if (ShapeBar.shapeColorPieces[i].GetComponent<SpriteRenderer>().color == defaultColor)
                     {
-                        ShapeBar.shapeColorPieces[i].GetComponent<SpriteRenderer>().material.color = spriteColor;
+                        ShapeBar.shapeColorPieces[i].GetComponent<SpriteRenderer>().color = spriteColor;
                         containsHex = true;
                         LevelManager.numFilled++;
                         break;
@@ -55,9 +55,9 @@ public class ColorPiece : MonoBehaviour {
             {
                 if (ShapeBar.shapeColorPieces[i].gameObject.tag == "barSquare")
                 {
-                    if (ShapeBar.shapeColorPieces[i].GetComponent<SpriteRenderer>().material.color == defaultColor)
+                    if (ShapeBar.shapeColorPieces[i].GetComponent<SpriteRenderer>().color == defaultColor)
                     {
-                        ShapeBar.shapeColorPieces[i].GetComponent<SpriteRenderer>().material.color = spriteColor;
+                        ShapeBar.shapeColorPieces[i].GetComponent<SpriteRenderer>().color = spriteColor;
                         containsSquare = true;
                         LevelManager.numFilled++;
                         break;
@@ -75,9 +75,9 @@ public class ColorPiece : MonoBehaviour {
             {
                 if (ShapeBar.shapeColorPieces[i].gameObject.tag == "barTriangle")
                 {
-                    if (ShapeBar.shapeColorPieces[i].GetComponent<SpriteRenderer>().material.color == defaultColor)
+                    if (ShapeBar.shapeColorPieces[i].GetComponent<SpriteRenderer>().color == defaultColor)
                     {
-                        ShapeBar.shapeColorPieces[i].GetComponent<SpriteRenderer>().material.color = spriteColor;
+                        ShapeBar.shapeColorPieces[i].GetComponent<SpriteRenderer>().color = spriteColor;
                         LevelManager.numFilled++;
                         containsTriangle = true;
                         break;
