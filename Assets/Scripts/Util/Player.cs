@@ -44,25 +44,6 @@ public class Player : MonoBehaviour {
 
         GetComponent<SpriteRenderer>().color = playerColor;
 
-        // TEST MOUSE
-        if (Input.GetMouseButton(0))
-        {
-            Vector3 Pos = Input.mousePosition;
-            Pos = Camera.main.ScreenToWorldPoint(Pos);
-            transform.position = new Vector3(Pos.x, transform.position.y, transform.position.z);
-
-            notTouching = false;
-            addMass = Time.deltaTime / 10f;
-            transform.localScale = new Vector3(transform.localScale.x + addMass, transform.localScale.y + addMass, 0);
-
-        }
-
-        if(Input.GetMouseButtonUp(0))
-        {
-            notTouching = true;
-        }
-        // TEST MOUSE
-
         if (transform.localScale.x < 0.5f)
         {
             if (SceneManager.GetActiveScene().name != "Tutorial")
@@ -84,7 +65,7 @@ public class Player : MonoBehaviour {
 
             if (touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Moved)
             {
-                addMass = Input.GetTouch(0).deltaTime / 10f;
+                addMass = Time.deltaTime / 10f;
                 notTouching = false;
                 transform.localScale = new Vector3(transform.localScale.x + addMass, transform.localScale.y + addMass, 0);
             }
