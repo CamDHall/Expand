@@ -84,7 +84,7 @@ public class Player : MonoBehaviour {
 
             if (touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Moved)
             {
-                addMass = Time.deltaTime / 10f;
+                addMass = Time.deltaTime / 15f;
                 notTouching = false;
                 transform.localScale = new Vector3(transform.localScale.x + addMass, transform.localScale.y + addMass, 0);
             }

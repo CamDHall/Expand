@@ -17,7 +17,7 @@ public class PowerUpManager : MonoBehaviour {
     // Spawning info
     public GameObject _freezePrefab, _damagePrefab, _boostPrefab;
     Vector3 newPowerUpPos;
-    float xPosLow = -2.5f, xPosHigh = 2.5f, yPosLow = 7f, yPosHigh = 9f;
+    float xPosLow = -2.5f, xPosHigh = 2.5f, yPosLow = 9f, yPosHigh = 12f;
 
     string lastChoice;
     float gravity;
