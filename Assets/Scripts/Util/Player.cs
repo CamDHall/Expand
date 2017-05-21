@@ -57,6 +57,25 @@ public class Player : MonoBehaviour {
         }
         currentScale = transform.localScale.x;
 
+        // TEST MOUSE 
+        if (Input.GetMouseButton(0))
+        {
+            Vector3 Pos = Input.mousePosition;
+            Pos = Camera.main.ScreenToWorldPoint(Pos);
+            transform.position = new Vector3(Pos.x, transform.position.y, transform.position.z);
+
+            notTouching = false;
+            addMass = Time.deltaTime / 10f;
+            transform.localScale = new Vector3(transform.localScale.x + addMass, transform.localScale.y + addMass, 0);
+
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            notTouching = true;
+        }
+        // TEST MOUSE
+
         foreach (Touch touch in Input.touches)
         {
             Pos = Camera.main.ScreenToWorldPoint(touch.position);
