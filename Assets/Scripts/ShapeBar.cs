@@ -27,8 +27,6 @@ public class ShapeBar : MonoBehaviour {
         shapeColorPieces = new List<GameObject>();
         spawnNewBar = false;
 
-        Debug.Log(screenDimensions);
-
         // Bar height
         if(numberOfBars <= 3 )
         {

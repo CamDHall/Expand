@@ -34,7 +34,7 @@ public class Player : MonoBehaviour {
 
     void Update()
     {
-        if(transform.localScale.x <= 1f)
+        if(transform.localScale.x <= 1.2f)
         {
             playerColor = new Color(1, 0, 0);
         } else
@@ -114,7 +114,7 @@ public class Player : MonoBehaviour {
         if (coll.gameObject.tag == "Hexagon" || coll.gameObject.tag == "Square" || coll.gameObject.tag == "Triangle")
         {
             Screenshake.shaking = true;
-            transform.localScale -= new Vector3(transform.localScale.x * 0.6f, transform.localScale.y * 0.6f, 0);
+            transform.localScale -= new Vector3(transform.localScale.x * 0.5f, transform.localScale.y * 0.5f, 0);
             coll.gameObject.transform.DetachChildren();
 
             for (int i = Shapes.obstacleShapes.Count - 1; i >= 0; i--)

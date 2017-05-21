@@ -41,7 +41,6 @@ public class Spawner : MonoBehaviour {
     void Update() {
         if (LevelManager.numFilled == ShapeBar.barHeight)
         {
-            Debug.Log("UPDATE");
             SpawnShapeBar();
             LevelManager.numFilled = 0;
         }

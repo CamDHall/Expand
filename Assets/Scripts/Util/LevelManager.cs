@@ -40,7 +40,7 @@ public class LevelManager : MonoBehaviour {
 
     void Start()
     {
-
+        currentLevel = 0;
         spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>();
 
         if (currentLevel == 0)
@@ -84,6 +84,7 @@ public class LevelManager : MonoBehaviour {
         }
 
         currentExperience += numOfShapes;
+        Debug.Log(spawner.filledShapeBars.Count);
     }
 
     void OnApplicationQuit()
