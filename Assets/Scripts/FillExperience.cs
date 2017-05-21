@@ -22,7 +22,6 @@ public class FillExperience : MonoBehaviour {
             LevelManager.currentLevel++;
             currentLevel.text = "Level: " + LevelManager.currentLevel.ToString();
             LevelManager.currentExperience -= LevelManager.requiredExperience;
-            GetComponent<Image>().fillAmount = Mathf.LerpUnclamped(GetComponent<Image>().fillAmount, fill, Time.deltaTime);
             var level = Instantiate(levelUp);
             level.transform.SetParent(transform, false);
         }
