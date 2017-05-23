@@ -34,7 +34,7 @@ public class Spawner : MonoBehaviour {
 
         fairChoice = 0;
 
-        if(shapeBar != null)
+        if(shapeBar == null)
             Instantiate(shapeBar);
     }
 
