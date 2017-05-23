@@ -17,6 +17,7 @@ public class FillExperience : MonoBehaviour {
     {
         fill = LevelManager.currentExperience / LevelManager.requiredExperience;
         GetComponent<Image>().fillAmount = Mathf.LerpUnclamped(GetComponent<Image>().fillAmount, fill, Time.deltaTime);
+        Debug.Log(GetComponent<Image>().fillAmount);
         if(GetComponent<Image>().fillAmount >= 1)
         {
             LevelManager.currentLevel++;
